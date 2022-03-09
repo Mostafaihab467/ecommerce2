@@ -6,28 +6,27 @@ import { Card } from 'react-bootstrap';
 import './Product.scss'
 import Ratings from '../Ratings/Ratings';
 import { useDispatch } from 'react-redux';
-import {selectProduct} from '../../../store/Action/ProductAction'
+
 
 interface Props{
   item:ProductModel
 }
 
 function Product({item}:Props) {
-  const dipatch =  useDispatch()
-  const setItems=(item:ProductModel)=>{
-    dipatch(selectProduct(item))
-  }
+
+
+
+
+
 
   return (
     <Card className='main_itme_card' >
     <div className='item_contentsCard' >
-    <Link to={`/Product/${item.id}`}  onClick={()=>{
-      setItems(item)
-    }}>
+    <Link to={`/Product/${item._id}`} >
       <Card.Img  src={require(`../../../assets/images/${item.image}`)} variant='top'/>
       
     </Link>
-    <Link to={`/product/${item.id}`} >
+    <Link to={`/product/${item._id}`} >
     <Card.Body className='itmeNameCard'>
         <Card.Title  as='div'><strong>{item.name}</strong></Card.Title>
     </Card.Body>

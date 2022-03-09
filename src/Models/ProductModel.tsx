@@ -1,5 +1,5 @@
 export interface ProductModel {
-    id: string,
+    _id: string,
     name: string,
     description: string,
     brand: string,
@@ -15,7 +15,7 @@ export interface ProductModel {
 
 
 export class C_Product {
-    id = ''
+    _id = ''
     name = ''
     description = ''
     brand = ''
@@ -25,7 +25,7 @@ export class C_Product {
     rating = 0
     numReviews = 0
     image: any
-    constructor(id: string,
+    constructor(_id: string,
         name: string,
         description: string,
         brand: string,
@@ -35,7 +35,7 @@ export class C_Product {
         rating: number,
         numReviews: number,
         image: any) {
-        this.id = id
+        this._id = _id
         this.price = price,
         this.description = description,
         this.brand = brand,

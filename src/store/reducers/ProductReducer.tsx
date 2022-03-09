@@ -17,9 +17,15 @@ interface Action {
 const productReducer=(state=intialState,action:Action)=>{
     switch(action.type){
 
+
+        case 'INITPRODS':
+       
+      
+        return {...state,product:[...action.payload][0]}
+
         case  'SELECTED_PRODUCT' :
 
-        return {...state,product:action.payload}
+        return {...state,selectedProduct:action.payload}
 
         default :return state;
     }
