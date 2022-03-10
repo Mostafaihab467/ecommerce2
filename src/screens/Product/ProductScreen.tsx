@@ -11,6 +11,17 @@ import {useNavigate} from 'react-router'
 import { Add_toCart, ADD_TO_CART } from '../../store/Action/cartAction';
 
 
+
+
+export const QTY=(countInStock:number)=>{
+  let items = []
+  for(var i=0 ;i<countInStock;i++){
+    items.push(i)
+  }
+
+  return items
+}
+
 function ProductScreen({match}:any) {
   const nav = useNavigate()
   const id = useParams()['id']
@@ -21,14 +32,7 @@ function ProductScreen({match}:any) {
 
   }, [])
 
-const QTY=(countInStock:number)=>{
-  let items = []
-  for(var i=0 ;i<countInStock;i++){
-    items.push(i)
-  }
 
-  return items
-}
 
 const cartHandler=(prod:ProductModel)=>{
   dispatch(Add_toCart(prod,qty))

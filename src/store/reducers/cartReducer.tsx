@@ -27,24 +27,22 @@ const cartReducer = (state = InitialState, action: Action) => {
 
 
             if (isItemExist) {
-                isItemExist!.qty = isItemExist!.qty +  (action.qty ?  action.qty : 1)
-                const item = new C_CartItem(action.payload, isItemExist.qty)
+                isItemExist!.qty = (action.qty ? action.qty : 1)
+                const item = new C_CartItem(action.payload, isItemExist.qty, isItemExist.id)
 
-                return { ...state, MyCart: [item] }
+                return { ...state, MyCart: [...state.MyCart] }
             } else {
 
-                return { ...state, MyCart: [...state.MyCart, new C_CartItem(action.payload, 1)] }
+                return { ...state, MyCart: [...state.MyCart, new C_CartItem(action.payload, (action.qty ? action.qty : 1), action.payload._id)] }
             }
 
-        case 'DELE_FROM_CART':
-            const item =  state.MyCart.find((product:ICartItem)=>product.cartItem._id == action.payload._id)
+        case 'DELETE_FROM_CART':
 
-            if(item){
 
-            }else{
-                
-            }
-            return { ...state }
+
+            return { ...state, MyCart: [...state.MyCart.filter((product: any) => product.id !== action.payload)] }
+
+
 
         default: return state
     }

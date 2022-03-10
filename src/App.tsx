@@ -8,7 +8,7 @@ import ProductScreen from './screens/Product/ProductScreen';
 import agent from './agent/agent';
 import { useDispatch } from 'react-redux';
 import { InitProducts } from './store/Action/ProductAction';
-import Cartscreen from './screens/CartScreen/cartscreen';
+import Cartscreen from './screens/CartScreen/Cartscreen';
 
 
 
@@ -37,6 +37,7 @@ function App(props:any) {
         
         </Route>
       <Route path='/cart'  >
+      <Route path="" element={<Cartscreen />} />
       <Route path=":id/" element={<Cartscreen />} />
       <Route path=":qty/" element={<Cartscreen />} />
       </Route>

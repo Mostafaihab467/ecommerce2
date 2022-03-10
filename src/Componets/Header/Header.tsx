@@ -18,7 +18,7 @@ function Header() {
       <Navbar.Collapse id="basic-navbar-nav">
      
         <Nav className="ml-auto header_items">
-          <Nav.Link href="#home"><i className='fas fa-shopping-cart'/> Cart</Nav.Link>
+          <Nav.Link href="../cart/"><i className='fas fa-shopping-cart'/> Cart</Nav.Link>
           <Nav.Link href="#link"><i className='fas fa-user'/>  Sign In</Nav.Link>
         </Nav>
       </Navbar.Collapse>

@@ -22,3 +22,9 @@ export const ADD_TO_CART=(items:ProductModel,qty:number)=>({
     payload:items,
     qty:qty
 })
+
+
+export const DELETE_FROM_CART=(id:String)=>({
+    type:'DELETE_FROM_CART',
+    payload:id
+})
