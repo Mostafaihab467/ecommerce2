@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { ProductModel } from './../Models/ProductModel';
 
 
 
@@ -28,6 +29,7 @@ axios.interceptors.response.use(async(response)=>{
 const productsApi={
     getAllproducts:()=>axios.get('/api/products'),
     getProductbyId:(id:string)=>axios.get(`/api/products/${id}`),
+    addto_cart:(items:ProductModel)=>axios.post('/api/addtocart',items)
 
 }
 

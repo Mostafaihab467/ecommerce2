@@ -9,9 +9,11 @@ import {
   BrowserRouter as Router, Routes,
 
 } from "react-router-dom";
+
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { store,persistor } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 
@@ -23,9 +25,9 @@ export const history = createBrowserHistory();
 ReactDOM.render(
   <Provider store={store}>
   <Router>
-
+  <PersistGate persistor={persistor}>
       <App />
-  
+   </PersistGate>
   </Router>
   </Provider>,
 

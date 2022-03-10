@@ -2,19 +2,21 @@ import {combineReducers} from 'redux'
 import storage from 'redux-persist/lib/storage'
 import {createTransform, persistReducer} from 'redux-persist'
 import productReducer from './reducers/ProductReducer'
+import cartReducer from './reducers/cartReducer'
 
 
 
 const PersistConfig={
     key:'root',
     storage,
-    whitelist:['workspace','user',"Hub"]
+    whitelist:['cartRepo']
   
   }
 
-export  const root_reducer = combineReducers({
-      productRepo:productReducer
+  const root_reducer = combineReducers({
+      productRepo:productReducer,
+      cartRepo:cartReducer
 })
 
-
-export default persistReducer(PersistConfig,root_reducer)
+const rootReducerCongured = persistReducer(PersistConfig,root_reducer)
+export default rootReducerCongured

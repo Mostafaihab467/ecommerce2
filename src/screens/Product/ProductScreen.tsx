@@ -7,11 +7,12 @@ import { Col, Row, Image, ListGroup, Container, Card, Button, Form } from 'react
 import Ratings from '../../Componets/Widgets/Ratings/Ratings';
 import { getProductByID } from '../../store/Action/ProductAction';
 import Spinner from '../../Componets/Widgets/Spinner/Spinner';
+import {useNavigate} from 'react-router'
+import { Add_toCart, ADD_TO_CART } from '../../store/Action/cartAction';
 
 
-
-
-function ProductScreen() {
+function ProductScreen({match}:any) {
+  const nav = useNavigate()
   const id = useParams()['id']
   const [qty, setQty] = useState<number>(0)
   const dispatch = useDispatch()
@@ -29,8 +30,9 @@ const QTY=(countInStock:number)=>{
   return items
 }
 
-const cartHandler=()=>{
-  
+const cartHandler=(prod:ProductModel)=>{
+  dispatch(Add_toCart(prod,qty))
+  nav(`/cart/${id}?qty=${qty}`)
   return 1
 }
 
@@ -104,7 +106,8 @@ const cartHandler=()=>{
                       </Row>
                     </ListGroup.Item>)}
                   <ListGroup.Item>
-                    <Button disabled={selectedProduct.countInStock > 0 ? false : true} className='btn-block' type='button' style={{ width: '100%' }} onClick={cartHandler} >Add to Cart</Button>
+                    <Button disabled={selectedProduct.countInStock > 0 ? false : true} className='btn-block'
+                     type='button' style={{ width: '100%' }} onClick={()=>{cartHandler(selectedProduct)}} >Add to Cart</Button>
 
                   </ListGroup.Item>
                 </ListGroup>
