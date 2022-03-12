@@ -9,6 +9,10 @@ import agent from './agent/agent';
 import { useDispatch } from 'react-redux';
 import { InitProducts } from './store/Action/ProductAction';
 import Cartscreen from './screens/CartScreen/Cartscreen';
+import LoginScreen from './screens/LoginScreen/LoginScreen';
+import RegistrationScreen from './screens/RegistrationScreen/RegistrationScreen';
+import Shipping from './screens/Shipping/Shipping';
+import PaymentScreen from './screens/Payment/PaymentScreen';
 
 
 
@@ -32,10 +36,17 @@ function App(props:any) {
      
       <main className='main'>
       <Routes>
-      <Route path="/"  element={<HomeScreen/>}/>
-      <Route path="/Product/:id"  element={<ProductScreen />}>
         
-        </Route>
+      <Route path="/"  element={<HomeScreen/>}/>
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/shipping"  element={<Shipping/>}/>
+      <Route path="/register" element={<RegistrationScreen />} />
+      <Route path="/Product/:id"   element={<ProductScreen />}/>
+      <Route path="/payment/"   element={<PaymentScreen />}/>
+        
+       
+
+      
       <Route path='/cart'  >
       <Route path="" element={<Cartscreen />} />
       <Route path=":id/" element={<Cartscreen />} />

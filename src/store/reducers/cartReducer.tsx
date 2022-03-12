@@ -1,10 +1,13 @@
 import { ICartItem, C_CartItem } from "../../Models/CartItem";
+import { C_Shipping } from "../../Models/ShppingModel";
 import { C_Product, ProductModel } from './../../Models/ProductModel';
+import { IShiiping } from './../../Models/ShppingModel';
 
 
 
 let InitialState = {
-    MyCart: new Array<C_CartItem>()
+    MyCart: new Array<C_CartItem>(),
+    Shipping_Address: new C_Shipping()
 }
 
 
@@ -37,12 +40,15 @@ const cartReducer = (state = InitialState, action: Action) => {
             }
 
         case 'DELETE_FROM_CART':
+            return { ...state, MyCart: [...state.MyCart.filter((product: ICartItem) => product.cartItem._id !== action.payload)] }
 
+        case 'ADD_SHIPPING_ADDRESS':
+            const shippedAddress = action.payload as IShiiping
 
+        return {...state,Shipping_Address:shippedAddress}
+        case 'CLEAR_CART':
 
-            return { ...state, MyCart: [...state.MyCart.filter((product: any) => product.id !== action.payload)] }
-
-
+        return state
 
         default: return state
     }
