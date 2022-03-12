@@ -1,25 +1,34 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ListGroup, Row, Col, Button, Form, Container, ListGroupItem } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Login } from '../../store/Action/userAction';
 import { IUserModel } from '../../Models/userModel';
 import FacebookLogin from 'react-facebook-login';
+import { SET_REDIRECT_PATH } from '../../store/Action/RouterAction';
 
 
 function LoginScreen() {
+    const nav = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setpassword] = useState('')
-
+    const isLogged = useSelector((state: any) => state.user.user.token) != ''
+    const redirectLink = useSelector((state: any) => state.redirection.redirect) as string
     const dispatch = useDispatch()
     const submitButton = (e: any) => {
         e.preventDefault()
+      
         const user = {
             email: email,
             password: password,
             name: ""
         } as IUserModel
         dispatch(Login(user))
+        if( redirectLink !='../../'){
+            nav(redirectLink)
+            dispatch(SET_REDIRECT_PATH('../../'))
+        }
+        isLogged ? nav('../../') : null
     }
 
  
@@ -40,7 +49,7 @@ function LoginScreen() {
                             <Form.Control type='password' placeholder='passwod' value={password} onChange={(e) => setpassword(e.target.value)}></Form.Control>
                         </Form.Group>
 
-                        <Button type='submit' variant='primary' >Sign In</Button>
+                        <Button  type='submit' variant='primary' >Sign In</Button>
                     </Form>
 
                     <Row className='py-3'>

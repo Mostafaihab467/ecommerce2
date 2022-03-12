@@ -13,6 +13,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen/RegistrationScreen';
 import Shipping from './screens/Shipping/Shipping';
 import PaymentScreen from './screens/Payment/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen/PlaceOrderScreen';
 
 
 
@@ -42,8 +43,8 @@ function App(props:any) {
       <Route path="/shipping"  element={<Shipping/>}/>
       <Route path="/register" element={<RegistrationScreen />} />
       <Route path="/Product/:id"   element={<ProductScreen />}/>
-      <Route path="/payment/"   element={<PaymentScreen />}/>
-        
+      <Route path="/payment"   element={<PaymentScreen />}/>
+      <Route path="/placeOrder"   element={<PlaceOrderScreen />}/>
        
 
       

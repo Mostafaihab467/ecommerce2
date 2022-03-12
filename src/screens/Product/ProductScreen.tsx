@@ -36,7 +36,7 @@ function ProductScreen({match}:any) {
 
 const cartHandler=(prod:ProductModel)=>{
   dispatch(Add_toCart(prod,qty))
-  nav(`/cart/${id}?qty=${qty}`)
+  nav(`/cart/`)
   return 1
 }
 

@@ -7,18 +7,21 @@ import DONE from '../../../assets/images/Done.png'
 import './CheckoutSteps.scss'
 
 interface CheckoutStpes {
-  step1: boolean,
-  step2: boolean,
+  step1?: boolean,
+  step2?: boolean,
   step3: boolean,
   step4: boolean,
 }
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }: CheckoutStpes) => {
+  const paymentMehod =  useSelector((state:any)=>state.payment.paymentMethod)!=''
+  const isLogged = useSelector((state:any)=>state.user.user.token)!=''
+  const isShipping = useSelector((state:any)=>state.cartRepo.Shipping_Address.address) !=''
   return (
     <div>
       <Nav className='justify-content-center mb-4'>
         <Nav.Item>
-          {step1 ? <div className='done'>
+          {isLogged ? <div className='done'>
             <img src={DONE} /> <Nav.Link  href='../login' >Signed</Nav.Link>  </div> :
 
             <Nav.Link disabled className='navLink' >Sign In</Nav.Link>
@@ -27,7 +30,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }: CheckoutStpes) => {
         </Nav.Item>
 
         <Nav.Item>
-          {step2 ? <div className='done'>
+          {isShipping ? <div className='done'>
             <img src={DONE} /> <Nav.Link href='../shipping'>Shipping</Nav.Link>  </div> :
 
             <Nav.Link disabled>Shipping</Nav.Link>
@@ -38,7 +41,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }: CheckoutStpes) => {
 
 
         <Nav.Item>
-          {step3 ? <div className='done'>
+          {paymentMehod ? <div className='done'>
             <img src={DONE} /> <Nav.Link href='../payment'>Payment</Nav.Link> </div> :
 
             <Nav.Link disabled>Payment</Nav.Link>

@@ -23,6 +23,7 @@ export const Register = (user: IUserModel) => {
 
 export const Logout =  () => {
     return async (dispatch: any) => {
+       
         dispatch(CLEAR_CART())
         dispatch(LOG_OUT())
     }

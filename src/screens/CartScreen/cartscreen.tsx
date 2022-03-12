@@ -10,19 +10,35 @@ import { ProductModel } from './../../Models/ProductModel';
 import './CartScreen.scss'
 import { QTY } from '../Product/ProductScreen';
 import { Add_toCart, DELETE_FROM_CART } from '../../store/Action/cartAction';
+import { SET_REDIRECT_PATH } from '../../store/Action/RouterAction';
 
 function Cartscreen(props: any) {
   const dispatch = useDispatch()
   const myCarts = useSelector((state: any) => state.cartRepo.MyCart) as ICartItem[]
+  const isLogged = useSelector((state: any) => state.user.user.token) != ''
+  const paymentMehod = useSelector((state: any) => state.payment.paymentMethod) != ''
+  const isShipping = useSelector((state: any) => state.cartRepo.Shipping_Address.address) != ''
   const nav = useNavigate()
   useEffect(() => {
 
   }, [])
 
-  const handleOrder = () => {
+  const handleCheckoutSteps = (e: any) => {
+    e.preventDefault()
 
+    if (!isLogged) { return '../../login' }
+
+    if (!isShipping) { return '../../shipping' }
+    if (!paymentMehod) { return '../../payment' }
+
+
+    // const isShipping = useSelector((state:any)=>state.cartRepo.Shipping_Address.address) !=''
+    // if(!isShipping){ return '../shipping' }
+    return '../../placeOrder'
 
   }
+
+
 
   return (
     <div>
@@ -73,12 +89,14 @@ function Cartscreen(props: any) {
               <ListGroup.Item>
                 <h2>Subtotal
                   items {myCarts.reduce((acc, item) => acc + item.qty, 0)}</h2>
-                ${myCarts.reduce((acc: any, item: any) => acc + item.qty * item.cartItem.price.toFixed(), 0)}
+                ${myCarts.reduce((acc: any, item: any) => acc + item.qty * item.cartItem.price ,0).toFixed()}
 
               </ListGroup.Item>
               <ListGroup.Item>
-                <Button onClick={() => {
-                    nav('../../shipping')
+                <Button onClick={(e) => {
+                  const link = handleCheckoutSteps(e)
+                  dispatch(SET_REDIRECT_PATH('../../shipping'))
+                  nav(link)
                 }} style={{ width: '100%' }} disabled={myCarts.length > 0 ? false : true} type='button' className='btn-block'>Proceed to CheckOut</Button>
               </ListGroup.Item>
             </ListGroup>

@@ -6,15 +6,19 @@ import { Row, Col, Image, Button, ListGroup, Form, Card, Nav } from 'react-boots
 import CheckoutSteps from '../../Componets/Widgets/CheckoutSteps/CheckoutSteps';
 import { IShiiping } from './../../Models/ShppingModel';
 import './PaymentScreen.scss'
+import { setPayment } from '../../store/Action/paymentAction';
 
 function Payment() {
+  const nav = useNavigate()
   const shipping = useSelector((state:any)=>state.cartRepo.Shipping_Address) as IShiiping
   const [paymentMehod,setPaymentMethod] = useState('')
   const dispatch = useDispatch()
 
 
  const handleChange=(e:any)=>{
-  e.preventdefault()
+  e.preventDefault()
+  dispatch(setPayment(paymentMehod))
+  nav('../placeOrder')
  }
 
   return (
@@ -25,7 +29,7 @@ function Payment() {
    
         <Col md={8}>
         <h2>Payment Method</h2>
-          <Form>
+          <Form onSubmit={handleChange} >
               <Form.Group>
               <h5><Form.Label>Select Method</Form.Label></h5>
               </Form.Group>
@@ -37,7 +41,7 @@ function Payment() {
                  
                  </Form.Check>
              
-                <div onChange={()=>handleChange} className='submit'><Button type='submit' variant='primary'>Continue</Button></div>
+                <div className='bt_submit'><Button  type='submit' variant='primary'>Continue</Button></div>
                 </Col>
           
           </Form>

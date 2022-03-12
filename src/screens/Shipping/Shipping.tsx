@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, Image, ListGroup, Container, Card, Button, Form, ListGroupItem } from 'react-bootstrap';
 import './Shipping.scss'
@@ -8,11 +8,12 @@ import { Add_Shipping_Address } from '../../store/Action/cartAction';
 import CheckoutSteps from '../../Componets/Widgets/CheckoutSteps/CheckoutSteps';
 function Shipping() {
 
-
+    const nav = useNavigate()
     const [address, setAdress] = useState('')
     const [city, setcity] = useState('')
     const [postalCode, setpostalCode] = useState('')
     const [country, setcCuntry] = useState('')
+    const isShipping = useSelector((state: any) => state.cartRepo.Shipping_Address.address) != ''
     const dispatch = useDispatch()
 
 
@@ -20,6 +21,8 @@ function Shipping() {
         const shippingAddress = new C_Shipping(city,address,postalCode,country)
 
        dispatch(Add_Shipping_Address(shippingAddress))
+        nav('../payment') 
+      
     }
 
     return (
