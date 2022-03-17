@@ -9,6 +9,7 @@ import { ICartItem } from '../../Models/CartItem';
 import { IShiiping } from './../../Models/ShppingModel';
 import { AddOrder } from '../../store/Action/orderAction';
 import { C_Order } from '../../Models/OrderModel';
+import { CLEAR_CART } from '../../store/Action/cartAction';
 function PlaceOrderScreen() {
     const paymentMehod = useSelector((state: any) => state.payment.paymentMethod)
     const myCarts = useSelector((state: any) => state.cartRepo.MyCart) as ICartItem[]
@@ -18,6 +19,7 @@ function PlaceOrderScreen() {
     const [total,setTotal] = useState(0)
     const Shipping = useSelector((state: any) => state.cartRepo.Shipping_Address) as IShiiping
     const dispatch = useDispatch()
+    const nav = useNavigate()
     const CaclulateSummary=()=>{
   
         setItems(Number(myCarts.reduce((acc,item)=>acc+item.cartItem.price,0).toFixed(2)))
@@ -34,7 +36,9 @@ function PlaceOrderScreen() {
 
     const handleSubmit=()=>{
     
-        dispatch(AddOrder(new C_Order(myCarts,paymentMehod)))
+        dispatch(AddOrder(new C_Order(myCarts,paymentMehod,Shipping,total,shipping,false,0)))
+        dispatch(CLEAR_CART())
+        nav('../../OrderScreen')
     }
 
     return (

@@ -1,0 +1,49 @@
+table, td {  
+    border: 1px solid rgb(65, 64, 64);
+   
+  }
+  th ,tr{
+    border: 1px solid rgb(65, 64, 64); 
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+
+
+    
+button{
+    border: none;
+    height: 35px;
+    color: white;
+    background-color: rgb(126, 130, 128);
+    width: 100px;
+    
+  }
+  }
+  
+  th, td {
+    padding: 15px;
+  }
+
+  span{
+    font-weight: 900;
+    font-size: 16px;
+  }
+  .True{
+      color: rgb(33, 169, 33);
+    
+  }
+
+  .False{
+    color: rgb(232, 25, 22);
+  
+}
+
+
+h3{
+  
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

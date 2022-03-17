@@ -48,7 +48,7 @@ const cartReducer = (state = InitialState, action: Action) => {
         return {...state,Shipping_Address:shippedAddress}
         case 'CLEAR_CART':
 
-        return state
+        return InitialState
 
         default: return state
     }

@@ -14,6 +14,9 @@ import RegistrationScreen from './screens/RegistrationScreen/RegistrationScreen'
 import Shipping from './screens/Shipping/Shipping';
 import PaymentScreen from './screens/Payment/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen/OrderScreen';
+import ListMyOrder from './screens/ListMyOrder/ListMyOrder';
+import ProfileScreen from './screens/MyProfile/ProfileScreen';
 
 
 
@@ -45,7 +48,9 @@ function App(props:any) {
       <Route path="/Product/:id"   element={<ProductScreen />}/>
       <Route path="/payment"   element={<PaymentScreen />}/>
       <Route path="/placeOrder"   element={<PlaceOrderScreen />}/>
-       
+      <Route path="/OrderScreen"   element={<OrderScreen />}/>
+      <Route path="/MyOrders"   element={<ListMyOrder />}/>
+      <Route path="/MyProfile"   element={<ProfileScreen />}/>
 
       
       <Route path='/cart'  >

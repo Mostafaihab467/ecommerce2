@@ -11,6 +11,7 @@ let intialState = {
 export interface Action {
     type:string
     payload:any
+    id:string
 }
 
 

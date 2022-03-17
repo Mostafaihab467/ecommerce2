@@ -34,7 +34,7 @@ function Header() {
               <Nav.Link href='../../login'><i className='fas fa-user' />
                 Sign In</Nav.Link> : 
               <NavDropdown title='Mostafa'>
-                <NavDropdown.Item>
+                <NavDropdown.Item href='../../MyProfile'>
                   Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={()=>{dispatch(Logout())}}>

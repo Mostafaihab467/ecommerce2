@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { IUserModel } from '../Models/userModel';
 import { ProductModel } from './../Models/ProductModel';
+import { IOrder } from './../Models/OrderModel';
 
 
 
@@ -41,9 +42,17 @@ const Auth={
     register:(user:IUserModel)=>axios.post('/api/Account/register',user)
 }
 
+const Order={
+    placeOrder:(order:IOrder)=>axios.post('/api/order/placeOrder',order),
+    findOrderbyId:(id:string)=>axios.get(`/api/order/${id}`),
+    payOrder:(id:string)=>axios.get(`/api/order/Pay/${id}`),
+    getMyOrders:()=>axios.post('api/order/myorders')
+}
+
 const agent ={
     productsApi,
-    Auth
+    Auth,
+    Order
 }
 
 

@@ -1,6 +1,7 @@
 import { IUserModel } from "../../Models/userModel"
 import agent from './../../agent/agent';
 import { CLEAR_CART } from "./cartAction";
+import { ORDER_CLEAR } from "./orderAction";
 
 export const Login = (user: IUserModel) => {
 
@@ -23,9 +24,10 @@ export const Register = (user: IUserModel) => {
 
 export const Logout =  () => {
     return async (dispatch: any) => {
-       
+       window.localStorage.clear()
         dispatch(CLEAR_CART())
         dispatch(LOG_OUT())
+        dispatch(ORDER_CLEAR())
     }
 }
 

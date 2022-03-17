@@ -13,7 +13,7 @@ import  RouterReducer  from './reducers/RouterReducer'
 const PersistConfig={
     key:'root',
     storage,
-    whitelist:['cartRepo','user','payment']
+    whitelist:['cartRepo','user','payment','order']
   
   }
 

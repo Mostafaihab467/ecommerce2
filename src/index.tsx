@@ -23,13 +23,15 @@ export const history = createBrowserHistory();
 
 
 ReactDOM.render(
+  <React.StrictMode>
   <Provider store={store}>
   <Router>
   <PersistGate persistor={persistor}>
       <App />
    </PersistGate>
   </Router>
-  </Provider>,
+  </Provider>
+  </React.StrictMode>,
 
   document.getElementById('root')
 );
