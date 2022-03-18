@@ -9,7 +9,7 @@ import { ICartItem } from '../../Models/CartItem';
 import { IShiiping } from './../../Models/ShppingModel';
 import { AddOrder } from '../../store/Action/orderAction';
 import { C_Order } from '../../Models/OrderModel';
-import { CLEAR_CART } from '../../store/Action/cartAction';
+import { CLEAR_CART, CLEAR_MY_CART } from '../../store/Action/cartAction';
 function PlaceOrderScreen() {
     const paymentMehod = useSelector((state: any) => state.payment.paymentMethod)
     const myCarts = useSelector((state: any) => state.cartRepo.MyCart) as ICartItem[]
@@ -37,7 +37,7 @@ function PlaceOrderScreen() {
     const handleSubmit=()=>{
     
         dispatch(AddOrder(new C_Order(myCarts,paymentMehod,Shipping,total,shipping,false,0)))
-        dispatch(CLEAR_CART())
+        dispatch(CLEAR_MY_CART())
         nav('../../OrderScreen')
     }
 

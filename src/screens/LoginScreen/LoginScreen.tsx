@@ -28,10 +28,10 @@ function LoginScreen() {
             nav(redirectLink)
             dispatch(SET_REDIRECT_PATH('../../'))
         }
-        isLogged ? nav('../../') : null
+    
     }
 
- 
+    isLogged ? nav('../../') : null
 
     return (
         <div>

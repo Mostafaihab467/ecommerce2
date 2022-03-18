@@ -22,6 +22,15 @@ export const Register = (user: IUserModel) => {
     }
 }
 
+export const deleteUser=(id:string)=>{
+    return async(disaptch:any)=>{
+        await agent.Account.deleteUser(id).then(res=>{
+            disaptch(DELETE_USER(id))
+        })
+      
+    }
+}
+
 export const Logout =  () => {
     return async (dispatch: any) => {
        window.localStorage.clear()
@@ -31,6 +40,15 @@ export const Logout =  () => {
     }
 }
 
+export const getAllUsers=()=>{
+    return async(dispatch:any)=>{
+        // Only "Admins"
+        await agent.Account.getAllUsers().then(res=>{
+            dispatch(GET_ALL_USERS(res.data))
+        })
+      
+    }
+}
 
 const REGISTER_USER = (user: IUserModel) => ({
     type: 'REGISTER_USER',
@@ -58,8 +76,16 @@ const LOGIN_USER = (user: IUserModel) => ({
 })
 
 
+const GET_ALL_USERS=(users:IUserModel[])=>({
+    type:'GET_ALL_USERS',
+    payload:users
+})
 
 
+const DELETE_USER=(id:string)=>({
+    type:'DELETE_USER',
+    payload:id
+})
 
 const LOG_OUT = () => ({
     type: 'LOGOUT',

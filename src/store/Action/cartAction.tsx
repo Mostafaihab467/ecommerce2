@@ -10,9 +10,9 @@ import { IShiiping } from "../../Models/ShppingModel";
 
 export const Add_toCart=(item:ProductModel,qty:number)=>{
     return async(dispatch:any)=>{
-        await agent.productsApi.addto_cart(item).then((res:any)=>{
+    
             dispatch(ADD_TO_CART(item as ProductModel,qty))
-        })
+       
 
     }
 }
@@ -46,4 +46,8 @@ export const ADD_TO_CART=(items:ProductModel,qty:number)=>({
 export const DELETE_FROM_CART=(id:String)=>({
     type:'DELETE_FROM_CART',
     payload:id
+})
+
+export const CLEAR_MY_CART=()=>({
+    type:'CLEAR_MY_CART'
 })

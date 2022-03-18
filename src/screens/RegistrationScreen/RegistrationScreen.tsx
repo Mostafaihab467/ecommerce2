@@ -14,7 +14,7 @@ function RegistrationScreen() {
 
 
     const handleSubmit = (e: any) => {
-        e.preventdefault()
+        e.preventDefault()
         if (confirmPassword == password) {
             const user = new C_User(email,password, name )
             dispatch(Register(user))

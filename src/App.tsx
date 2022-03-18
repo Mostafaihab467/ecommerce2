@@ -17,6 +17,9 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen/OrderScreen';
 import ListMyOrder from './screens/ListMyOrder/ListMyOrder';
 import ProfileScreen from './screens/MyProfile/ProfileScreen';
+import UsersScreen from './screens/UsersScreen/UsersScreen';
+import AdminsEditScreen from './screens/Admin/ProductScreen/AdminsEditScreen';
+import EditProdductScreen from './screens/Admin/EditProdductScreen';
 
 
 
@@ -51,6 +54,8 @@ function App(props:any) {
       <Route path="/OrderScreen"   element={<OrderScreen />}/>
       <Route path="/MyOrders"   element={<ListMyOrder />}/>
       <Route path="/MyProfile"   element={<ProfileScreen />}/>
+      <Route path='/AlUsers' element={<UsersScreen/>} />
+      <Route path='AdminsEditScreen' element={<AdminsEditScreen/>}/>
 
       
       <Route path='/cart'  >

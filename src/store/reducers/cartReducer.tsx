@@ -46,6 +46,10 @@ const cartReducer = (state = InitialState, action: Action) => {
             const shippedAddress = action.payload as IShiiping
 
         return {...state,Shipping_Address:shippedAddress}
+
+        case 'CLEAR_MY_CART':
+
+        return {...state,MyCart:new Array<C_CartItem>()}
         case 'CLEAR_CART':
 
         return InitialState

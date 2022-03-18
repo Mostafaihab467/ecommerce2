@@ -27,7 +27,7 @@ function Shipping() {
 
     return (
         <Row className='Main_Container'>
-            <CheckoutSteps  step1={true}  step2={true} step3={false} step4={false}/>
+            <CheckoutSteps  step1={true}  step2={true} step3={isShipping} step4={false}/>
             <Col md={5}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId='name'>

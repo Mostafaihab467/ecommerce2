@@ -7,51 +7,59 @@ import { IOrder } from './../Models/OrderModel';
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
-axios.interceptors.request.use(async(request)=>{
+axios.interceptors.request.use(async (request) => {
     const token = window.localStorage.getItem('jwt')
-    
-   token ? request.headers!.Authorization = `Bearer ${token}` : null
-  
+
+    token ? request.headers!.Authorization = `Bearer ${token}` : null
+
     return request
 })
 
 
 
 
-axios.interceptors.response.use(async(response)=>{
+axios.interceptors.response.use(async (response) => {
 
 
     return response
-},(error:AxiosResponse)=>{
+}, (error: AxiosResponse) => {
 
-  console.log(error)
+    console.log(error)
 
 })
 
 
-const productsApi={
-    getAllproducts:()=>axios.get('/api/products'),
-    getProductbyId:(id:string)=>axios.get(`/api/products/${id}`),
-    addto_cart:(items:ProductModel)=>axios.post('/api/addtocart',items)
- 
+const products = {
+    getAllproducts: () => axios.get('/api/products'),
+    getProductbyId: (id: string) => axios.get(`/api/products/${id}`),
+    productUpdate: (product: ProductModel) => axios.post('/api/products/EditProduct', product),
+    deleteProduct: (id: string) => axios.get(`/api/products/deleteProduct/${id}`)
+
 
 }
 
-const Auth={
-    login:(user:IUserModel)=>axios.post('/api/Account/login',user),
-    register:(user:IUserModel)=>axios.post('/api/Account/register',user)
+const Auth = {
+    login: (user: IUserModel) => axios.post('/api/Account/login', user),
+    register: (user: IUserModel) => axios.post('/api/Account/register', user),
 }
 
-const Order={
-    placeOrder:(order:IOrder)=>axios.post('/api/order/placeOrder',order),
-    findOrderbyId:(id:string)=>axios.get(`/api/order/${id}`),
-    payOrder:(id:string)=>axios.get(`/api/order/Pay/${id}`),
-    getMyOrders:()=>axios.post('api/order/myorders')
+const Account = {
+    getAllUsers: () => axios.get('./api/Account/AllUsers'),
+    deleteUser: (id: string) => axios.delete(`/api/Account/delete_user/${id}`)
 }
 
-const agent ={
-    productsApi,
+
+const Order = {
+    placeOrder: (order: IOrder) => axios.post('/api/order/placeOrder', order),
+    findOrderbyId: (id: string) => axios.get(`/api/order/${id}`),
+    payOrder: (id: string) => axios.get(`/api/order/Pay/${id}`),
+    getMyOrders: () => axios.post('api/order/myorders')
+}
+
+const agent = {
+    products,
     Auth,
+    Account,
     Order
 }
 
