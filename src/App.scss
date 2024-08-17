@@ -126,7 +126,7 @@
  // HomeScreen 
  body.dark-mode .home-screen{
   h1{
-   color: white;
+   color: var(--text-color);
   }
  }
 
@@ -135,16 +135,13 @@
 
  body.dark-mode  .CartScreen{
    h1 , .itemName{
-      color: white;
+      color: var(--text-color);
       text-decoration: none
    }
   
  }
 
  // Header 
-
- body.dark-mode  .Header{
-   .Search{
-      color: white;
-   }
+ body.dark-mode .Header .Search {
+   color: var(--text-color);;
  }

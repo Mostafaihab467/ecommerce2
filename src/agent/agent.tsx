@@ -30,7 +30,7 @@ axios.interceptors.response.use(async (response) => {
 
 
 const products = {
-    getAllproducts: () => axios.get('/api/products'),
+    getAllproducts: (page: number) => axios.get(`/api/products?page=${page}`),
     getProductbyId: (id: string) => axios.get(`/api/products/${id}`),
     productUpdate: (product: ProductModel) => axios.post('/api/products/EditProduct', product),
     deleteProduct: (id: string) => axios.get(`/api/products/deleteProduct/${id}`)

@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useEffect } from 'react';
 import './App.scss';
 import Footer from './Componets/Footer/Footer';
@@ -5,8 +6,8 @@ import Header from './Componets/Header/Header';
 import HomeScreen from './screens/HomeSceen/HomeScreen';
 import { Routes, Route } from 'react-router-dom';
 import ProductScreen from './screens/Product/ProductScreen';
-import { useDispatch } from 'react-redux';
-import { InitProducts } from './store/Action/ProductAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { InitProducts, SET_CURRENT_PAGE } from './store/Action/ProductAction';
 import Cartscreen from './screens/CartScreen/Cartscreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen/RegistrationScreen';
@@ -18,18 +19,31 @@ import ListMyOrder from './screens/ListMyOrder/ListMyOrder';
 import ProfileScreen from './screens/MyProfile/ProfileScreen';
 import UsersScreen from './screens/UsersScreen/UsersScreen';
 import AdminsEditScreen from './screens/Admin/ProductScreen/AdminsEditScreen';
-import EditProdductScreen from './screens/Admin/EditProdductScreen';
 import Sidebar from './Componets/Widgets/SideBar/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 function App(props: any) {
+  const { currentPage, itemsPerPage, totalPages } = useSelector((state: any) => state.productRepo.pagination);
+  const { cachedPages,pageChange }  = (useSelector((state: any) => state.productRepo)) ; 
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    dispatch(InitProducts());
-  }, [dispatch]);
+    // Initialize products on component mount
+var x = []
+  if(!cachedPages.includes(pageChange)){
+
+    dispatch(InitProducts(pageChange)); // Fetch the first page by default
+    dispatch(SET_CURRENT_PAGE(pageChange))
+  }
+
+    
+  }, [pageChange]);
+
+  const handlePageChange = (pageNumber: number) => {
+    dispatch(SET_CURRENT_PAGE(pageNumber)); // Update the current page
+    dispatch(InitProducts(pageNumber)); // Fetch products for the selected page
+  };
 
   return (
     <div className="app-container">
@@ -38,7 +52,7 @@ function App(props: any) {
         <Sidebar />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/" element={<HomeScreen onPageChange={handlePageChange} />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/register" element={<RegistrationScreen />} />
@@ -50,7 +64,6 @@ function App(props: any) {
             <Route path="/MyProfile" element={<ProfileScreen />} />
             <Route path="/AlUsers" element={<UsersScreen />} />
             <Route path="/AdminsEditScreen" element={<AdminsEditScreen />} />
-
             <Route path="/cart">
               <Route path="" element={<Cartscreen />} />
               <Route path=":id/" element={<Cartscreen />} />
