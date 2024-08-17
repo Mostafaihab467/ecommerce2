@@ -10,7 +10,7 @@ axios.defaults.baseURL = 'http://localhost:5000'
 axios.interceptors.request.use(async (request) => {
     const token = window.localStorage.getItem('jwt')
 
-    token ? request.headers!.Authorization = `Bearer ${token}` : null
+    request.headers!.Authorization = `Bearer ${token}` 
 
     return request
 })

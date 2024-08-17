@@ -12,6 +12,10 @@ export const InitProducts = () => {
         })
     }
 }
+export const setFilters = (filters: any) => ({
+    type: 'SET_FILTERS',
+    payload: filters
+});
 
 
 export const getProductByID = (id: string) => {

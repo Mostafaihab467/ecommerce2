@@ -71,7 +71,7 @@ function PlaceOrderScreen() {
                                 return <div className='itemsInCart'>
                                     <Row md={10}>
                                         <Col md={2}>
-                                            <Image fluid src={require(`../../assets/images/${product.cartItem.image}`)} />
+                                            <Image fluid src={product.cartItem.image} />
                                          
                                         </Col>
                                         <Col md={6}>

@@ -1,0 +1,19 @@
+.home-screen {
+    .recommended-products {
+      margin-top: 2rem; // Add margin to separate from other content
+    }
+  
+    .pagination-container {
+      display: flex;
+      justify-content: center; // Center the pagination
+      margin-top: 2rem; // Add top margin for spacing
+      padding: 1rem; // Add padding for better spacing
+    }
+  
+    .pagination {
+      display: flex;
+      justify-content: center; // Center pagination items
+      gap: 0.5rem; // Add some space between pagination items
+    }
+  }
+  

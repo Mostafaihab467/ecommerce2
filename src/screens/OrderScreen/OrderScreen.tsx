@@ -98,7 +98,7 @@ function OrderScreen() {
                                     return <div className='itemsInCart'>
                                         <Row md={10}>
                                             <Col md={2}>
-                                                <Image fluid src={require(`../../assets/images/${image}`)} />
+                                                <Image fluid src={image} />
 
                                             </Col>
                                             <Col md={6}>

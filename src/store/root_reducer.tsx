@@ -7,6 +7,7 @@ import { userReducer } from './reducers/userReducer'
 import paymentReducer from './reducers/paymentReducer'
 import orderReducer from './reducers/orderReducer'
 import  RouterReducer  from './reducers/RouterReducer'
+import themeReducer from './reducers/AppState.Reducer'
 
 
 
@@ -24,6 +25,7 @@ const PersistConfig={
       payment:paymentReducer,
       order:orderReducer,
       redirection:RouterReducer,
+      AppState:themeReducer
 })
 
 const rootReducerCongured = persistReducer(PersistConfig,root_reducer)

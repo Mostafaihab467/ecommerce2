@@ -1,0 +1,23 @@
+.sidebar {
+    display: flex;
+    background-color: #f9f9f9; /* Near-white background */
+    padding: 20px;
+    width: 250px;
+    height: 100vh; /* Full height of the viewport */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    .card-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  
+    .filter-group h5 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  
+    .filter-option {
+      margin-bottom: 0.5rem;
+    }
+  }
+  

@@ -1,9 +1,150 @@
-.main{
-   min-height: 50rem;
+// Global SCSS
+
+// DarkMode
+:root {
+   --background-color: #ffffff;
+   --text-color: #000000;
+ }
+ 
+ body.light-mode {
+   --text-color: #000000; /* Black text for light mode */
+ }
+ 
+ body.dark-mode {
+   --background-color: #121212;
+   --text-color: #ffffff; /* White text for dark mode */
+ }
+ 
+ .app-container {
+   background-color: var(--background-color);
+   color: var(--text-color);
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+ }
+ 
+ .content-wrapper {
+   display: flex;
+   flex: 1;
+ }
+ 
+ .main-content {
+   flex: 1;
    padding: 20px;
-   width: 80%;
-   margin-left: auto;
-   margin-right: auto;
+ }
+ 
+ // Sidebar
+ .sidebar {
+   width: 250px;
+   height: 100%;
+   background-color: var(--background-color); // Use variable for background color
+   padding: 10px;
+   color: var(--text-color); // Use variable for text color
+ }
+ 
+ body.dark-mode .sidebar {
+   background-color: #1f1f1f; // Dark background for sidebar
+   color: var(--text-color);
+ }
+ 
+ .sidebar-body {
+   color: var(--text-color); // Ensure text color is consistent in dark mode
+ }
+ 
+ .sidebar-title {
+   color: var(--text-color); // Title color
+ }
+ 
+ .sidebar-checkbox {
+   color: var(--text-color); // Checkbox text color
+ }
+ 
+ .sidebar-radio {
+   color: var(--text-color); // Radio button text color
+ }
+ 
+ .apply-filters-btn {
+   margin-top: 10px;
+ }
+ 
+ // ListGroup Item
+ .list-group-item {
+   background-color: var(--background-color); // Use variable for background color
+   color: var(--text-color); // Use variable for text color
+   border: 1px solid #ddd; // Light border for light mode
+ }
+ 
+ body.dark-mode .list-group-item {
+   background-color: #2a2a2a; // Dark background for list group items
+   color: var(--text-color); // White text color
+   border: 1px solid #444; // Dark border for dark mode
+ }
+ 
+ // Card Product
+ body.dark-mode .main_item_card {
+   background-color: #1f1f1f;
+   color: var(--text-color); // Ensure text remains white in dark mode
+ }
+ 
+ body.dark-mode .product-card {
+   border-color: #333;
+   background-color: #2a2a2a;
+   color: #e0e0e0;
+ 
+   &.latest {
+     background-color: #2a2a2a;
+   }
+ 
+   &.recommended {
+     background-color: #333;
+     border-color: #444;
+ 
+     .recommended-badge {
+       background-color: #ffcc00;
+       color: #000;
+     }
+     
+     .ProductName {
+       color: white;
+     }
+   }
+ }
+ 
+ body.dark-mode .product-price {
+   color: white;
+ }
+ 
+ body.dark-mode .product-card-body {
+   strong {
+     color: white; // Ensure the product name is white in dark mode
+   }
+ 
+   .text {
+     color: white !important; // Ensure all text is white in dark mode
+   }
+ }
+ // HomeScreen 
+ body.dark-mode .home-screen{
+  h1{
+   color: white;
+  }
+ }
+
+
+ // CartScreen
+
+ body.dark-mode  .CartScreen{
+   h1 , .itemName{
+      color: white;
+      text-decoration: none
+   }
   
-   
-}
+ }
+
+ // Header 
+
+ body.dark-mode  .Header{
+   .Search{
+      color: white;
+   }
+ }

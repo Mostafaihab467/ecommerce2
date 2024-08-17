@@ -1,9 +1,43 @@
-i{
-    margin-left: 10px;
-}
-.header_items{
-    
+.header_items {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-}
+    align-items: center; // Align items vertically center
+  
+    .icon-link {
+      display: flex;
+      align-items: center;
+      color: var(--text-color);
+      font-size: 0.875rem; // Adjust font size if needed
+      margin-left: 1rem;
+  
+      i {
+        margin-right: 5px;
+      }
+    }
+  
+    .user-info {
+      .profile-image {
+        width: 35px; // Adjust size if needed
+        height: 35px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+  
+      span {
+        color: var(--text-color);
+        font-weight: bold;
+        font-size: 0.875rem; // Adjust font size if needed
+      }
+    }
+  
+    .navWrapper {
+      display: flex;
+      align-items: center;
+      color: var(--text-color);
+      font-size: large;
+      cursor: pointer;
+    }
+  }
+  
+  /* Define variables for dark mode and light mode */

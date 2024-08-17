@@ -1,47 +1,45 @@
-import React from 'react'
-import {ProductModel} from '../../../Models/ProductModel'
-import {Link ,useNavigate} from "react-router-dom";
+import React from 'react';
+import { ProductModel } from '../../../Models/ProductModel';
+import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-
-import './Product.scss'
+import './Product.scss';
 import Ratings from '../Ratings/Ratings';
-import { useDispatch } from 'react-redux';
 
-
-interface Props{
-  item:ProductModel
+interface Props {
+  item: ProductModel;
+  variant?: 'latest' | 'recommended'; // Add variant prop
 }
 
-function Product({item}:Props) {
-
-
-
-
-
-
+function Product({ item, variant = 'latest' }: Props) {
   return (
-    <Card className='main_itme_card' >
-    <div className='item_contentsCard' >
-    <Link to={`/Product/${item._id}`} >
-      <Card.Img  src={require(`../../../assets/images/${item.image}`)} variant='top'/>
-      
-    </Link>
-    <Link to={`/product/${item._id}`} >
-    <Card.Body className='itmeNameCard'>
-        <Card.Title  as='div'><strong>{item.name}</strong></Card.Title>
-    </Card.Body>
-    </Link>
-    <Card.Text as='div' >
-    <Ratings rating={item.rating} numReviews={item.numReviews}/>
-
-      </Card.Text>
-     
-      <Card.Text className='priceCard' as='h4'>
-          ${item.price}
-        </Card.Text>
-    </div>
+    <Card className={`product-card ${variant}`}>
+      <div className="product-card-content">
+        <Link to={`/Product/${item._id}`}>
+          <Card.Img 
+            className="product-image"
+            src={item.image} 
+            variant="top" 
+          />
+        </Link>
+        <Card.Body className="product-card-body">
+          <Link to={`/Product/${item._id}`}>
+            <Card.Title as="div">
+              <strong className='text'>{item.name}</strong>
+            </Card.Title>
+          </Link>
+          <Card.Text as="div">
+            <Ratings rating={item.rating} numReviews={item.numReviews} />
+          </Card.Text>
+          <Card.Text className="product-price" as="h4">
+            ${item.price}
+          </Card.Text>
+          {variant === 'recommended' && (
+            <div className="recommended-badge">Recommended</div> // Add badge for recommended items
+          )}
+        </Card.Body>
+      </div>
     </Card>
-  )
+  );
 }
 
-export default Product
+export default Product;

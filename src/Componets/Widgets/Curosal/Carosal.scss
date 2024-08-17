@@ -1,0 +1,28 @@
+.CarosalImage {
+    width: 500px !important;
+    height: 350px !important;
+    object-fit: cover; /* This ensures the image maintains its aspect ratio */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .CrosalDescription {
+    width: 250px; /* Fixed width */
+    max-height: 300px; /* Fixed height */
+    position: absolute;
+    right: 0; /* Align to the right */
+    bottom: 20px; /* Adjust this value to move it vertically */
+    margin-left: 150px;
+    margin-right: 0px; /* Adjust this value to control the right margin */
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: add background for better readability */
+    color: white;
+    padding: 10px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    font-size: small;
+    justify-content: center;
+   
+  }
+  

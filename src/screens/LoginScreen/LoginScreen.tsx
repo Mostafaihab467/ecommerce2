@@ -31,7 +31,7 @@ function LoginScreen() {
     
     }
 
-    isLogged ? nav('../../') : null
+ //   isLogged ? nav('../../') : null
 
     return (
         <div>
