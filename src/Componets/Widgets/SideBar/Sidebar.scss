@@ -1,23 +1,152 @@
-.sidebar {
-    display: flex;
-    background-color: #f9f9f9; /* Near-white background */
-    padding: 20px;
-    width: 250px;
-    height: 100vh; /* Full height of the viewport */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.sidebarx {
+    width: 300px;
+    background-color: var(--background-color);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+    position: absolute;
+   
+    top: 0;
+    left: -300px; // Start off-screen
+    height: 100%;
+    z-index: 1050;
+    transition: left 0.3s ease;
   
-    .card-title {
+    &.show {
+      left: 0; // Slide in when shown
+    }
+    
+
+    .offcanvas-header {
+      background: linear-gradient(135deg, #007bff, #6610f2);
+      color: #fff;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(13, 0, 0, 0.961);
+    }
+  
+    .close-button {
+      background: none;
+      border: none;
+      color: #fff;
       font-size: 1.5rem;
-      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+  
+      &:hover {
+        transform: rotate(90deg);
+      }
+    }
+   
+    .offcanvas-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem; // Space between sections
     }
   
-    .filter-group h5 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+    .sidebar-section {
+      .sidebar-heading {
+        margin-bottom: 1rem;
+        color: #495057;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+  
+      .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+  
+        .sidebar-item {
+          padding: 0.75rem 1.25rem;
+          border-radius: 8px;
+          color: #495057;
+          text-decoration: none;
+          display: block;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
+          transition: background-color 0.3s, transform 0.3s;
+  
+          &:hover {
+            background-color: #f8f9fa;
+            transform: translateX(10px);
+          }
+        }
+      }
     }
   
-    .filter-option {
-      margin-bottom: 0.5rem;
+    .sidebar-divider {
+      border-top: 2px solid #e9ecef;
+      margin: 1.5rem 0;
     }
   }
   
+  // Styling for header items and menu bar
+  .header_items {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  
+    .icon-link {
+      display: flex;
+      align-items: center;
+      color: var(--text-color);
+      font-size: 0.875rem;
+      margin-left: 1rem;
+  
+      i {
+        margin-right: 5px;
+      }
+    }
+  
+    .user-info {
+      .profile-image {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+  
+      span {
+        color: var(--text-color);
+        font-weight: bold;
+        font-size: 0.875rem;
+      }
+    }
+  
+    .navWrapper {
+      display: flex;
+      align-items: center;
+      color: var(--text-color);
+      font-size: large;
+      cursor: pointer;
+    }
+  }
+  
+  .Menuebar {
+    cursor: pointer;
+    font-weight: 900;
+    position: absolute;
+    left: 41px;
+  }
+  
+  // Dark mode and light mode variables
+  :root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+  }
+  
+  .dark-mode {
+    --background-color: #343a40;
+    --text-color: #ffffff;
+  }
+  
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }

@@ -40,6 +40,16 @@ export const InitProducts = (page: number = 1) => {
       }
     };
   };
+
+export const userAddProduct=(products:any)=>{
+    
+    return async (dispatch: any) => {
+        await agent.products.userAddProduct(products).then((res) => {
+            dispatch(USER_ADD_PRODUCT(res.data as any));
+        })
+    }
+}
+
 export const setFilters = (filters: any) => ({
   type: "SET_FILTERS",
   payload: filters,
@@ -99,4 +109,7 @@ export const HANDEL_PAGE_CHANGE = (page : number) => ({
   });
   
   
-  
+export const USER_ADD_PRODUCT = (payload:any) =>({
+    type: "USER_ADD_PRODUCT",
+    payload: payload,
+})  

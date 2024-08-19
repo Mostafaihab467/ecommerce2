@@ -90,7 +90,7 @@ function EditProdductScreen({ setmode,product }: Props) {
                     </Row>
                 </Col>
                 <Col md={3}>
-                    <Image fluid src={require(`../../assets/images/${product.image}`)}/>
+                    <Image fluid src={product.image}/>
                 </Col>
             </Row>
 

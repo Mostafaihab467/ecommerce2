@@ -19,8 +19,12 @@ import ListMyOrder from './screens/ListMyOrder/ListMyOrder';
 import ProfileScreen from './screens/MyProfile/ProfileScreen';
 import UsersScreen from './screens/UsersScreen/UsersScreen';
 import AdminsEditScreen from './screens/Admin/ProductScreen/AdminsEditScreen';
-import Sidebar from './Componets/Widgets/SideBar/Sidebar';
+import Sidebar from './Componets/Widgets/Filtration/Filtration';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AddProductForm from './screens/AddProduct/AddProductScreen';
+
+
+
 
 function App(props: any) {
   const { currentPage, itemsPerPage, totalPages } = useSelector((state: any) => state.productRepo.pagination);
@@ -28,8 +32,11 @@ function App(props: any) {
   const dispatch = useDispatch();
 
 
+  
+
   useEffect(() => {
     // Initialize products on component mount
+    //API Key = FernCsYysABnnUyK8HcriX2a
 var x = []
   if(!cachedPages.includes(pageChange)){
 
@@ -63,6 +70,7 @@ var x = []
             <Route path="/MyOrders" element={<ListMyOrder />} />
             <Route path="/MyProfile" element={<ProfileScreen />} />
             <Route path="/AlUsers" element={<UsersScreen />} />
+            <Route path="/AddProduct" element={<AddProductForm />} />
             <Route path="/AdminsEditScreen" element={<AdminsEditScreen />} />
             <Route path="/cart">
               <Route path="" element={<Cartscreen />} />

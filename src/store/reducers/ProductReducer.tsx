@@ -5,7 +5,7 @@ let initialState = {
   product: new Array<C_Product>(),
   pageChange:1,
   cachedPages: [],
-  selectedProduct: new C_Product("", "", "", "", "", 0, 0, 0, 0, 0),
+  selectedProduct: new C_Product("", "", "", "", "", 0, 0, 0, 0, 0,"null"),
   filters: {
     categories: [] as string[],
     priceRange: { min: 0, max: Infinity },
@@ -41,6 +41,8 @@ const productReducer = (state = initialState, action: Action) => {
           totalPages: action.totalPages
         }
       };
+    case 'USER_ADD_PRODUCT':
+        return {...state}
 
     case "SET_CURRENT_PAGE":
       return { 

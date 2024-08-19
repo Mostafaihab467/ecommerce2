@@ -15,10 +15,10 @@ function Product({ item, variant = 'latest' }: Props) {
     <Card className={`product-card ${variant}`}>
       <div className="product-card-content">
         <Link to={`/Product/${item._id}`}>
-          <Card.Img 
+          <img 
             className="product-image"
             src={item.image} 
-            variant="top" 
+            alt={''}
           />
         </Link>
         <Card.Body className="product-card-body">

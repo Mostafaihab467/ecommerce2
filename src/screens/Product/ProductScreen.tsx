@@ -3,7 +3,7 @@ import './ProductScreen.scss';
 import { ProductModel } from './../../Models/ProductModel';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from "react-router-dom";
-import { Col, Row, Image, ListGroup, Card, Button, Form } from 'react-bootstrap';
+import { Col, Row, Image, ListGroup, Card, Button, Form, Carousel } from 'react-bootstrap';
 import Ratings from '../../Componets/Widgets/Ratings/Ratings';
 import { getProductByID } from '../../store/Action/ProductAction';
 import Spinner from '../../Componets/Widgets/Spinner/Spinner';
@@ -32,7 +32,7 @@ function ProductScreen() {
     dispatch(Add_toCart(prod, qty));
     nav(`/cart/`);
   };
-
+//AddProductScreen
   const selectedProduct = useSelector((state: any) => state.productRepo.selectedProduct) as ProductModel;
 
   return (
@@ -44,7 +44,13 @@ function ProductScreen() {
           <Link className='btn btn-light my-3' to=''>Go Back</Link>
           <Row>
             <Col md={6}>
-              <Image src={selectedProduct.image} alt={selectedProduct.name} fluid />
+              <Carousel>
+                {[...Array(4)].map((_, index) => (
+                  <Carousel.Item key={index}>
+                    <Image src={selectedProduct.image} alt={selectedProduct.name} fluid />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
