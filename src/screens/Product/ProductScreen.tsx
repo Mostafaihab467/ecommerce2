@@ -1,14 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import './ProductScreen.scss';
-import { ProductModel } from './../../Models/ProductModel';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import "./ProductScreen.scss";
+import { ProductModel } from "./../../Models/ProductModel";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Col, Row, Image, ListGroup, Card, Button, Form, Carousel } from 'react-bootstrap';
-import Ratings from '../../Componets/Widgets/Ratings/Ratings';
-import { getProductByID } from '../../store/Action/ProductAction';
-import Spinner from '../../Componets/Widgets/Spinner/Spinner';
-import { useNavigate } from 'react-router';
-import { Add_toCart } from '../../store/Action/cartAction';
+import {
+  Col,
+  Row,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+  Carousel,
+} from "react-bootstrap";
+import Ratings from "../../Componets/Widgets/Ratings/Ratings";
+import {
+  AddProductImage,
+  deleteProduct,
+  getProductByID,
+} from "../../store/Action/ProductAction";
+import Spinner from "../../Componets/Widgets/Spinner/Spinner";
+import { useNavigate } from "react-router";
+import { Add_toCart } from "../../store/Action/cartAction";
 
 export const QTY = (countInStock: number) => {
   let items = [];
@@ -20,7 +33,7 @@ export const QTY = (countInStock: number) => {
 
 function ProductScreen() {
   const nav = useNavigate();
-  const id = useParams()['id'];
+  const id = useParams()["id"];
   const [qty, setQty] = useState<number>(0);
   const dispatch = useDispatch();
 
@@ -28,41 +41,111 @@ function ProductScreen() {
     dispatch(getProductByID(id!));
   }, [dispatch, id]);
 
+  const [formData, setFormData] = useState({ image: null as File | null });
+  const user = useSelector((state: any) => state.user.user) as ProductModel;
   const cartHandler = (prod: ProductModel) => {
     dispatch(Add_toCart(prod, qty));
     nav(`/cart/`);
   };
-//AddProductScreen
-  const selectedProduct = useSelector((state: any) => state.productRepo.selectedProduct) as ProductModel;
 
+  const selectedProduct = useSelector(
+    (state: any) => state.productRepo.selectedProduct
+  ) as ProductModel;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    setFormData({
+      ...formData,
+      image: file,
+    });
+
+    
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append("_id", selectedProduct._id);
+    if (formData.image) {
+      formDataToSubmit.append("image", formData.image);
+      dispatch(AddProductImage(formDataToSubmit));
+    }
+  };
   return (
     <div>
-      {selectedProduct._id === '' ? (
+      {selectedProduct._id === "" ? (
         <Spinner />
       ) : (
         <>
-          <Link className='btn btn-light my-3' to=''>Go Back</Link>
+          <Link className="btn btn-light my-3" to="../">
+            Go Back
+          </Link>
+
           <Row>
+            <Row md={6}>
+              
+              <div className="image-container">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Control
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    id="file-input" // Add a unique ID to the input
+                    style={{ display: "none" }} // Hide the input element
+                  />
+                  <label htmlFor="file-input" className="clickable-icon">
+                    <i className="fas fa-plus add-icon"></i>
+                  </label>
+                  <Button onSubmit={handleSubmit} variant="primary" type="submit">
+                    Upload
+                  </Button>
+
+                </Form>
+              </div>
+            </Row>
             <Col md={6}>
+            
               <Carousel>
-                {[...Array(4)].map((_, index) => (
+              <Carousel.Item>
+                    <Image
+                      src={selectedProduct.image}
+                      alt={selectedProduct.name}
+                      fluid
+                    />
+                  </Carousel.Item>
+                {selectedProduct.productimages.map((_, index) => (
                   <Carousel.Item key={index}>
-                    <Image src={selectedProduct.image} alt={selectedProduct.name} fluid />
+                    <Image
+                      src={selectedProduct.productimages[index]}
+                      alt={selectedProduct.name}
+                      fluid
+                    />
                   </Carousel.Item>
                 ))}
               </Carousel>
             </Col>
             <Col md={3}>
-              <ListGroup variant='flush'>
+              <Button
+                variant="danger"
+                className="btn-sm action delete"
+                onClick={() => {
+                  dispatch(deleteProduct(selectedProduct._id));
+                }}
+              >
+                <i className="fas fa-trash"></i>
+              </Button>
+              <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h3>{selectedProduct.name}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Ratings rating={selectedProduct.rating} numReviews={selectedProduct.numReviews} />
+                  <Ratings
+                    rating={selectedProduct.rating}
+                    numReviews={selectedProduct.numReviews}
+                  />
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  Price: ${selectedProduct.price}
-                </ListGroup.Item>
+                <ListGroup.Item>Price: ${selectedProduct.price}</ListGroup.Item>
                 <ListGroup.Item>
                   Description: {selectedProduct.description}
                 </ListGroup.Item>
@@ -70,7 +153,7 @@ function ProductScreen() {
             </Col>
             <Col md={3}>
               <Card>
-                <ListGroup variant='flush'>
+                <ListGroup variant="flush">
                   <ListGroup.Item>
                     <Row>
                       <Col>Price:</Col>
@@ -83,8 +166,17 @@ function ProductScreen() {
                     <Row>
                       <Col>Status:</Col>
                       <Col>
-                        <strong style={{ color: selectedProduct.countInStock > 0 ? 'green' : 'red' }}>
-                          {selectedProduct.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                        <strong
+                          style={{
+                            color:
+                              selectedProduct.countInStock > 0
+                                ? "green"
+                                : "red",
+                          }}
+                        >
+                          {selectedProduct.countInStock > 0
+                            ? "In Stock"
+                            : "Out of Stock"}
                         </strong>
                       </Col>
                     </Row>
@@ -95,7 +187,7 @@ function ProductScreen() {
                         <Col>Qty</Col>
                         <Col>
                           <Form.Control
-                            as='select'
+                            as="select"
                             value={qty}
                             onChange={(e) => setQty(parseInt(e.target.value))}
                           >
@@ -112,9 +204,9 @@ function ProductScreen() {
                   <ListGroup.Item>
                     <Button
                       disabled={selectedProduct.countInStock <= 0}
-                      className='btn-block'
-                      type='button'
-                      style={{ width: '100%' }}
+                      className="btn-block"
+                      type="button"
+                      style={{ width: "100%" }}
                       onClick={() => cartHandler(selectedProduct)}
                     >
                       Add to Cart
@@ -124,6 +216,7 @@ function ProductScreen() {
               </Card>
             </Col>
           </Row>
+         
         </>
       )}
     </div>

@@ -1,23 +1,49 @@
 .sidebar {
-    display: flex;
-    background-color: #f9f9f9; /* Near-white background */
-    padding: 20px;
-    width: 250px;
-    height: 100vh; /* Full height of the viewport */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+  display: flex;
+  background-color: #f9f9f9; /* Near-white background */
+  padding: 20px;
+  width: 250px;
+  height: 100vh; /* Full height of the viewport */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-direction: column; /* Ensure elements stack vertically */
+  position: fixed; /* Keep sidebar fixed while scrolling */
+  left: 0; /* Align sidebar to the left */
+  top: 0; /* Align sidebar to the top */
+  z-index: 1000; /* Ensure it stays above other content */
+
+  .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .filter-group h5 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-option {
+    margin-bottom: 0.5rem;
+  }
+
+  // Responsive styles
+  @media (max-width: 1200px) {
+    width: 200px; // Reduce width on smaller screens
+  }
+
+  @media (max-width: 992px) {
+    width: 180px; // Further reduce width
+    padding: 15px; // Adjust padding
+
     .card-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.25rem; // Smaller font size for titles
     }
-  
+
     .filter-group h5 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-  
-    .filter-option {
-      margin-bottom: 0.5rem;
+      font-size: 1rem; // Smaller font size for filter group titles
     }
   }
-  
+
+  @media (max-width: 768px) {
+    display: none; // Hide sidebar on small screens
+  }
+}

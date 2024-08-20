@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, Form, ListGroup, Button } from 'react-bootstrap';
-import './Filtration.scss';
 import { useDispatch } from 'react-redux';
 import { setFilters } from '../../../store/Action/ProductAction'; // Update this import based on your action file
 
@@ -36,7 +35,7 @@ const Filtration = () => {
   };
 
   return (
-    <Card className="sidebar">
+    <Card className="sidebar d-none d-md-block"> {/* Add Bootstrap classes for hiding */}
       <Card.Body className='sidebar-body'>
         <Card.Title>Filters</Card.Title>
         

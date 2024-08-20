@@ -1,21 +1,102 @@
-
-.create_prod{
-    padding-bottom: 10px;
-}
-.productImg{
-    height: 90px;
-    width: 90px;
-}
-
-
-i{
-    display: flex;
-    justify-content:flex-end;
-    align-items: center;
-}
-.action{
-    width: 40px;
-}
-.edit{
-    border: 1px solid rgb(213, 195, 195);
-}
+.ProductOverViewScreen {
+    // General styles
+    padding: 10px;
+    
+    // Responsive adjustments
+    @media (max-width: 768px) {
+      .create_prod {
+        text-align: center;
+        padding-bottom: 10px;
+      }
+  
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+  
+      th, td {
+        padding: 8px;
+        text-align: left;
+        display: block;
+      }
+  
+      th {
+        display: none; // Hide header row for smaller screens
+      }
+  
+      tr {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        margin-bottom: 10px;
+      }
+  
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+        
+        &:before {
+          content: attr(data-label);
+          position: absolute;
+          left: 0;
+          width: 50%;
+          padding-left: 10px;
+          font-weight: bold;
+          text-align: left;
+        }
+      }
+    }
+  
+    @media (min-width: 768px) {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+  
+      th, td {
+        padding: 10px;
+        text-align: left;
+      }
+  
+      th {
+        background-color: #f8f9fa;
+      }
+    }
+  
+    // Style for images
+    .productImg {
+      height: auto;
+      max-width: 100%;
+    }
+  
+    // Style for action buttons
+    .action {
+      width: 40px;
+      padding: 5px;
+    }
+  
+    .edit {
+      border: 1px solid rgb(213, 195, 195);
+    }
+  
+    i {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .image-container {
+    position: relative;
+  }
+  
+  .add-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: green;
+    font-size: 24px;
+    z-index: 1;
+    background-color: white; // Optional: to make sure it's visible
+    border-radius: 50%;
+    padding: 5px;
+  }

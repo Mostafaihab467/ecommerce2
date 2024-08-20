@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,65 +21,42 @@ function ProductScreenOverView({ setmode, setProduct }: Props) {
   const dispatch = useDispatch();
 
   const { pageChange } = useSelector((state: any) => state.productRepo);
-// Calculate the index of the last product to display
-const indexOfLastProduct = pageChange * itemsPerPage;
-// Calculate the index of the first product to display
-const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-// Get the products to display on the current page
-const currentProducts = products.slice(
-  indexOfFirstProduct,
-  indexOfLastProduct
-);
+  // Calculate the index of the last product to display
+  const indexOfLastProduct = pageChange * itemsPerPage;
+  // Calculate the index of the first product to display
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  // Get the products to display on the current page
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
-
-  const myProd = () => {};
   return (
     <div className="ProductOverViewScreen">
       <div>
         <div className="create_prod">
           <Button variant="success">Create</Button>{" "}
         </div>
-        <table className="">
-          <tr>
-            <th className="headerTh">
-              <span>ID</span>
-            </th>
-            <th className="headerTh">
-              <span>Image</span>
-            </th>
-            <th className="headerTh">
-              <span>Price</span>
-            </th>
-            <th className="headerTh">
-              <span>Category</span>
-            </th>
-            <th className="headerTh">
-              <span>Brand</span>
-            </th>
-            <th></th>
-          </tr>
-
-          {currentProducts.map((prod: ProductModel) => {
-            return (
-              <tr>
-                <th>
-                  <span>{prod._id}</span>
-                </th>
-                <th>
-                  <img className="productImg" src={prod.image} />
-                </th>
-                <th>
-                  <span>${prod.price}</span>
-                </th>
-                <th>
-                   <span> {prod.category}</span> 
-                     </th>
-                <th>
-                <span> 
-                    {prod.brand}
-                    </span> 
-                </th>
-                <th>
+        <table>
+          <thead>
+            <tr>
+              <th className="headerTh"><span>ID</span></th>
+              <th className="headerTh"><span>Image</span></th>
+              <th className="headerTh"><span>Price</span></th>
+              <th className="headerTh"><span>Category</span></th>
+              <th className="headerTh"><span>Brand</span></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentProducts.map((prod: ProductModel) => (
+              <tr key={prod._id}>
+                <td data-label="ID"><span>{prod._id}</span></td>
+                <td data-label="Image"><img className="productImg" src={prod.image} alt={prod._id} /></td>
+                <td data-label="Price"><span>${prod.price}</span></td>
+                <td data-label="Category"><span>{prod.category}</span></td>
+                <td data-label="Brand"><span>{prod.brand}</span></td>
+                <td>
                   <div className="usersAction_div">
                     <Button
                       variant="light"
@@ -102,13 +78,13 @@ const currentProducts = products.slice(
                       <i className="fas fa-trash"></i>
                     </Button>
                   </div>
-                </th>
+                </td>
               </tr>
-            );
-          })}
+            ))}
+          </tbody>
         </table>
       </div>
-      <ProductPagination/>
+      <ProductPagination />
     </div>
   );
 }

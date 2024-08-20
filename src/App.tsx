@@ -31,6 +31,9 @@ function App(props: any) {
   const { cachedPages,pageChange }  = (useSelector((state: any) => state.productRepo)) ; 
   const dispatch = useDispatch();
 
+  window.addEventListener('resize', () => {
+    console.log(`Width: ${window.innerWidth}, Height: ${window.innerHeight}`);
+});
 
   
 

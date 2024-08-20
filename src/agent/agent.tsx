@@ -40,6 +40,15 @@ const products = {
             }
         });
     },
+
+    AddProduct_Image: (product: any) => {
+       
+        return axios.post('/api/products/AddproductImage', product, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
     productUpdate: (product: ProductModel) => axios.post('/api/products/EditProduct', product),
     deleteProduct: (id: string) => axios.get(`/api/products/deleteProduct/${id}`)
 

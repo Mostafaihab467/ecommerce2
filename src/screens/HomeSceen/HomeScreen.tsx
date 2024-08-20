@@ -1,15 +1,10 @@
-// src/screens/HomeSceen/HomeScreen.tsx
 import React, { useState, useEffect } from "react";
-import { Row, Col, Pagination } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Product from "../../Componets/Widgets/Product/Product";
 import { ProductModel } from "../../Models/ProductModel";
 import { useDispatch, useSelector } from "react-redux";
 import Carosal from "../../Componets/Widgets/Curosal/Carosal";
 import "./HomeScreen.scss"; // Import the updated styles
-import {
-  HANDEL_PAGE_CHANGE,
-
-} from "../../store/Action/ProductAction";
 import ProductPagination from "../../Componets/Widgets/Pagination/Pagination";
 
 interface HomeScreenProps {
@@ -46,6 +41,7 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
       };
 
       // Shuffle and set the products
+      shuffleArray(products);
     }
   }, [products]);
 
@@ -54,34 +50,37 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
   // Calculate the index of the first product to display
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
   // Get the products to display on the current page
-  const currentProducts = products.slice(
+  var currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
+  if(currentProducts.length == 0){
+    currentProducts = products.slice(-8);
+  }
   return (
     <div className="home-screen">
       <Carosal products={products} />
       {products && products.length > 0 ? (
         <>
-          <h1 className="text">Latest Products</h1>
-          <Row style={{ flex: "nowrap" }}>
+          <h1 className="text-center">Latest Products</h1>
+          <Row>
             {currentProducts.map((product: ProductModel) => (
-              <Col key={product._id} sm={2} md={5} lg={2} xl={3}>
+              <Col key={product._id} xs={12} sm={6} md={4} lg={3} xl={3}>
                 <Product item={product} />
               </Col>
             ))}
           </Row>
           {/* Pagination Controls */}
           <div className="pagination-container">
-           <ProductPagination/>
+            <ProductPagination />
           </div>
           {/* Recommended Products Section */}
-          <div className="recommended-products">
-            <h2>Recommended for You</h2>
-            <Row style={{ flex: "nowrap" }}>
+          <div className="recommended-products mt-4">
+            <h2 className="text-center">Recommended for You</h2>
+            <Row>
               {products.length > 0 && (
-                <Col key={products[0]._id} sm={2} md={5} lg={2} xl={3}>
+                <Col key={products[0]._id} xs={12} sm={6} md={4} lg={3} xl={2}>
                   <Product item={products[0]} variant="recommended" />
                 </Col>
               )}
@@ -89,7 +88,7 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
           </div>
         </>
       ) : (
-        <h2>No Products To Show</h2>
+        <h2 className="text-center">No Products To Show</h2>
       )}
     </div>
   );

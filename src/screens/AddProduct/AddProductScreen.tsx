@@ -64,9 +64,7 @@ const AddProductForm: React.FC = () => {
     }
 
 
-    const product = new C_Product("",formData.user,formData.description,formData.brand,formData.category
-        ,3,3,4,5,"",formData.image
-    )
+    
     console.log('FormData contents:');
     formDataToSubmit.forEach((value, key) => {
         console.log(key, value);
