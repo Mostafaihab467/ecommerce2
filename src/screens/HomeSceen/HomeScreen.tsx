@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import Product from "../../Componets/Widgets/Product/Product";
-import { ProductModel } from "../../Models/ProductModel";
+import { C_Product, ProductModel } from "../../Models/ProductModel";
 import { useDispatch, useSelector } from "react-redux";
 import Carosal from "../../Componets/Widgets/Curosal/Carosal";
 import "./HomeScreen.scss"; // Import the updated styles
 import ProductPagination from "../../Componets/Widgets/Pagination/Pagination";
+import { SELECTED_PRODUCT } from "../../store/Action/ProductAction";
 
 interface HomeScreenProps {
   onPageChange: (pageNumber: number) => void;
@@ -18,12 +19,13 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
   const { itemsPerPage, totalPages } = useSelector(
     (state: any) => state.productRepo.pagination
   );
-
+ 
   const { pageChange } = useSelector((state: any) => state.productRepo);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(SELECTED_PRODUCT(new C_Product("","","","","",0,0,0,0,"","",[],"")))
     if (products.length > 0) {
       // Shuffle the products array
       const shuffleArray = (array: ProductModel[]) => {
@@ -41,7 +43,7 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
       };
 
       // Shuffle and set the products
-      shuffleArray(products);
+      
     }
   }, [products]);
 
@@ -53,7 +55,7 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
   var currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
-  );
+  ).sort();
 
   if(currentProducts.length == 0){
     currentProducts = products.slice(-8);

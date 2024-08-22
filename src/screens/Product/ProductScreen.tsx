@@ -1,6 +1,6 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent, useLayoutEffect } from "react";
 import "./ProductScreen.scss";
-import { ProductModel } from "../../Models/ProductModel";
+import { C_Product, ProductModel } from "../../Models/ProductModel";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
@@ -18,6 +18,7 @@ import {
   AddProductImage,
   deleteProduct,
   getProductByID,
+  SELECTED_PRODUCT,
 } from "../../store/Action/ProductAction";
 import Spinner from "../../Componets/Widgets/Spinner/Spinner";
 import { Add_toCart } from "../../store/Action/cartAction";
@@ -54,20 +55,23 @@ export const QTY = (countInStock: number): number[] => {
 
 const ProductScreen: React.FC = () => {
   const nav = useNavigate();
-  const { id } = useParams<{ id: string }>(); // Extract ID from params
+  const { id } = useParams();
   const [resizedImages, setResizedImages] = useState<string[]>([]);
-  const [qty, setQty] = useState<number>(1); // Default to 1
+  const [qty, setQty] = useState(1); // Default to 1
+  const [loading, setLoading] = useState(true); // Loading state
   const dispatch = useDispatch();
   
   const selectedProduct = useSelector(
-    (state: RootState) => state.productRepo.selectedProduct
+    (state: any) => state.productRepo.selectedProduct
   ) as ProductModel;
 
   useEffect(() => {
     const processImages = async () => {
       try {
+        setLoading(true); // Start loading
+
         // Process the main image
-        const resizedMainImage = await resizeImage(selectedProduct.image) as any;
+        const resizedMainImage = await resizeImage(selectedProduct.image);
         
         // Process additional images
         const resizedAdditionalImages = await Promise.all(
@@ -78,23 +82,28 @@ const ProductScreen: React.FC = () => {
         setResizedImages([resizedMainImage, ...resizedAdditionalImages]);
       } catch (error) {
         console.error('Error resizing image:', error);
+      } finally {
+        setLoading(false); // End loading
       }
     };
-
-    if (selectedProduct.image && selectedProduct.productimages.length > 0) {
+   
+    // Only call processImages when product images are available
+    if (selectedProduct.image ) {
       processImages();
     }
+  }, [selectedProduct.image, selectedProduct.productimages]); // Dependencies here
+
+  useEffect(() => {
+   
     dispatch(getProductByID(id));
-  }, [dispatch, id, selectedProduct.image, selectedProduct.productimages]);
+  }, [dispatch, id]);
 
-  const [formData, setFormData] = useState<{ image: File | null; removeBackground: boolean }>({
-    image: null,
-    removeBackground: false
-  });
 
-  const user = useSelector((state: RootState) => state.user.user) as IUserModel;
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const [formData, setFormData] = useState({ image: null as File | null, removeBackground: false });
+  const user = useSelector((state: any) => state.user.user) as IUserModel;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setFormData({
       ...formData,
@@ -102,7 +111,7 @@ const ProductScreen: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("_id", selectedProduct._id);
@@ -111,15 +120,18 @@ const ProductScreen: React.FC = () => {
     if (formData.image) {
       formDataToSubmit.append("image", formData.image);
       dispatch(AddProductImage(formDataToSubmit));
+      nav('../')
     }
   };
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       removeBackground: e.target.checked,
     });
   };
+
+  
 
   const cartHandler = (prod: ProductModel) => {
     dispatch(Add_toCart(prod, qty));
@@ -133,12 +145,17 @@ const ProductScreen: React.FC = () => {
       ) : (
         <>
           <Link className="btn btn-light my-3" to="../">
-            Go Back
+            Go Back 
           </Link>
 
           <Row>
             {/* Product Images Carousel */}
             <Col md={6}>
+          
+            {loading ? (
+                <Spinner /> // Show spinner while loading
+              ) : (
+            
               <Carousel>
                 {resizedImages.length > 0 && (
                   <Carousel.Item>
@@ -150,16 +167,19 @@ const ProductScreen: React.FC = () => {
                   </Carousel.Item>
                 )}
                 {resizedImages.slice(1).map((image, index) => (
-                  <Carousel.Item key={index}>
+                  <Carousel.Item  key={index}>
+                    <div style={{display:'flex',justifyContent:"center"}}>
+
                     <Image
                       src={image} // Additional images
                       alt={`${selectedProduct.name} ${index}`}
                       fluid
-                    />
+                      />
+                      </div>
                   </Carousel.Item>
                 ))}
               </Carousel>
-            </Col>
+                  )}    </Col>
 
             {/* Product Details */}
             <Col md={3}>
@@ -265,9 +285,9 @@ const ProductScreen: React.FC = () => {
                               style={{ display: "none" }}
                             />
                             <label htmlFor="file-input" className="clickable-icon">
-                              <i className="fas fa-plus add-icon"></i>
+                              <i  className="fas fa-plus primary">Add Image</i>
                             </label>
-                            <Button variant="primary" type="submit" className="ms-2">
+                            <Button  variant="primary" type="submit" className="ms-2">
                               Upload
                             </Button>
                           </Form>

@@ -9,6 +9,7 @@ import orderReducer from './reducers/orderReducer'
 import  RouterReducer  from './reducers/RouterReducer'
 import themeReducer from './reducers/AppState.Reducer'
 import StatsticsReducer from './reducers/StatsticsReducer'
+import soketReducer from './reducers/SocketReducer'
 
 
 
@@ -27,7 +28,8 @@ const PersistConfig={
       order:orderReducer,
       redirection:RouterReducer,
       AppState:themeReducer,
-      statics:StatsticsReducer
+      statics:StatsticsReducer,
+      soketReducer:soketReducer
 })
 
 const rootReducerCongured = persistReducer(PersistConfig,root_reducer)

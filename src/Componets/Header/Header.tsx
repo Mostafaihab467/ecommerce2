@@ -106,7 +106,7 @@ function Header() {
                 <div className="navWrapper">
                   <NavDropdown
                     id="nav-dropdown-dark-example"
-                    title={
+                     title={
                       <span className="user-info">
                         <Card.Img
                           src="https://cdn-icons-png.flaticon.com/512/219/219970.png"

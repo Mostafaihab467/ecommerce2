@@ -1,11 +1,10 @@
 // src/store/Reducers/themeReducer.ts
 
-import { C_Statstics, C_SystemStats } from "../../Models/StatsticsModel";
+import { C_Statstics } from "../../Models/StatsticsModel";
 
 
 const initialState = {
   statstics: new C_Statstics(0,0,0,0,0),
-  serverHealth:new C_SystemStats()
 };
 
 
@@ -15,22 +14,16 @@ interface Action{
     payload:any
 }
 
-const themeReducer = (state = initialState, action: Action) => {
+const soketReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case "GET_STATSTICS":
       return {
         ...state,
         statstics: action.payload,
       };
-      case'SERVER_HEALTH':
-      return {...state,serverHealth:action.payload
-      
-      
-      }
-
     default:
       return state;
   }
 };
 
-export default themeReducer;
+export default soketReducer;

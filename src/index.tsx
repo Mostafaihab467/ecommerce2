@@ -23,7 +23,7 @@ export const history = createBrowserHistory();
 
 
 ReactDOM.render(
-  <React.StrictMode>
+ 
   <Provider store={store}>
   <Router>
   <PersistGate persistor={persistor}>
@@ -31,7 +31,7 @@ ReactDOM.render(
    </PersistGate>
   </Router>
   </Provider>
-  </React.StrictMode>,
+  ,
 
   document.getElementById('root')
 );

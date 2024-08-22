@@ -8,11 +8,11 @@ function ListMyOrder() {
 
     const dispatch = useDispatch()
     const nav = useNavigate()
-    useEffect(()=>{
- 
+    useEffect(() => {
+
         dispatch(getAllMyOrders())
 
-    },[])
+    }, [])
 
     const ordersSummary = useSelector((state: any) => state.order.Orders_Summary) as IOrder_Summary[]
 
@@ -31,14 +31,14 @@ function ListMyOrder() {
                     </tr>
 
                     {ordersSummary.map((order: IOrder_Summary) => {
-                    return   ( <tr>
+                        return (<tr>
 
                             <th>{order.id}</th>
                             <th> {new Date(order.paidAt).toString().split('GMT')[0]}</th>
                             <th>{order.paidAt}</th>
                             <th>{order.isPaid ? <span className='True'>True</span> : <span className='False'>False</span>}</th>
                             <th className='False'>false</th>
-                            <th> <button onClick={()=>{
+                            <th> <button onClick={() => {
                                 dispatch(getOrderById(order.id))
                                 nav('../OrderScreen')
                             }}>Details</button></th>

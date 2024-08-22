@@ -24,6 +24,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AddProductForm from './screens/AddProduct/AddProductScreen';
 import ProductImagesModal from './Componets/Widgets/Modal/ProductImagesWidgetModal';
 import Dashboard from './screens/Dashboard/Dashboard';
+import { IntiateSocket } from './store/Action/SocketAction';
 
 
 
@@ -43,7 +44,7 @@ function App(props: any) {
     //API Key = FernCsYysABnnUyK8HcriX2a
 var x = []
   if(!cachedPages.includes(pageChange)){
-
+   // dispatch(IntiateSocket())
     dispatch(InitProducts(pageChange)); // Fetch the first page by default
     dispatch(SET_CURRENT_PAGE(pageChange))
   }
