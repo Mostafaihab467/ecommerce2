@@ -1,6 +1,6 @@
 // src/App.tsx
 import React, { useEffect } from 'react';
-import './App.scss';
+import './global.scss';
 import Footer from './Componets/Footer/Footer';
 import Header from './Componets/Header/Header';
 import HomeScreen from './screens/HomeSceen/HomeScreen';
@@ -22,12 +22,13 @@ import AdminsEditScreen from './screens/Admin/ProductScreen/AdminsEditScreen';
 import Sidebar from './Componets/Widgets/Filtration/Filtration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddProductForm from './screens/AddProduct/AddProductScreen';
+import ProductImagesModal from './Componets/Widgets/Modal/ProductImagesWidgetModal';
+import Dashboard from './screens/Dashboard/Dashboard';
 
 
 
 
 function App(props: any) {
-  const { currentPage, itemsPerPage, totalPages } = useSelector((state: any) => state.productRepo.pagination);
   const { cachedPages,pageChange }  = (useSelector((state: any) => state.productRepo)) ; 
   const dispatch = useDispatch();
 
@@ -63,9 +64,11 @@ var x = []
         <main className="main-content">
           <Routes>
             <Route path="/" element={<HomeScreen onPageChange={handlePageChange} />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/register" element={<RegistrationScreen />} />
+            <Route path="/product-images/:id" element={<ProductImagesModal />} />
             <Route path="/Product/:id" element={<ProductScreen />} />
             <Route path="/payment" element={<PaymentScreen />} />
             <Route path="/placeOrder" element={<PlaceOrderScreen />} />
@@ -89,3 +92,6 @@ var x = []
 }
 
 export default App;
+
+
+

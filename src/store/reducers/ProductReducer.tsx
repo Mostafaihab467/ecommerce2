@@ -3,9 +3,9 @@ import { C_Product, ProductModel } from "./../../Models/ProductModel";
 let initialState = {
   AllProducts: new Array<C_Product>(),
   product: new Array<C_Product>(),
-  pageChange:1,
+  pageChange: 1,
   cachedPages: [],
-  selectedProduct: new C_Product("", "", "", "", "", 0, 0, 0, 0, 0,"null",[]),
+  selectedProduct: new C_Product("", "", "", "", "", 0, 0, 0, 0, 0, "null", [], ""),
   filters: {
     categories: [] as string[],
     priceRange: { min: 0, max: Infinity },
@@ -32,8 +32,8 @@ export interface Action {
 const productReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case "INITPRODS":
-      return {  
-        ...state, 
+      return {
+        ...state,
         product: [...state.product, ...action.payload],
         AllProducts: action.payload,
         pagination: {
@@ -42,27 +42,29 @@ const productReducer = (state = initialState, action: Action) => {
         }
       };
     case 'USER_ADD_PRODUCT':
-        return {...state}
+      return { ...state }
 
+
+    
     case "SET_CURRENT_PAGE":
-      return { 
-        ...state, 
+      return {
+        ...state,
         pagination: {
           ...state.pagination,
           currentPage: action.payload
         },
-        cachedPages: [...state.cachedPages,action.payload].sort() // Ensure immutability
+        cachedPages: [...state.cachedPages, action.payload].sort() // Ensure immutability
       };
-      case "HANDEL_PAGE_CHANGE":
-        return { 
-            ...state,
-            pageChange:action.payload
-        }
+    case "HANDEL_PAGE_CHANGE":
+      return {
+        ...state,
+        pageChange: action.payload
+      }
 
 
     case "SET_TOTAL_PAGES":
-      return { 
-        ...state, 
+      return {
+        ...state,
         pagination: {
           ...state.pagination,
           totalPages: action.payload
@@ -74,22 +76,22 @@ const productReducer = (state = initialState, action: Action) => {
 
     case "UPDATE_PRODUCT":
       var prod = action.payload as ProductModel;
-      return { 
-        ...state, 
+      return {
+        ...state,
         product: state.product.map(p => p._id === prod._id ? prod : p) // Use map for immutability
       };
 
     case "DELETE_PRODUCT":
-      return { 
-        ...state, 
+      return {
+        ...state,
         product: state.product.filter(p => p._id !== action.payload) // Use filter for immutability
       };
 
     case 'SET_FILTERS':
       const filteredProducts = applyFilters(state.AllProducts, action.payload);
-      return { 
-        ...state, 
-        filters: action.payload, 
+      return {
+        ...state,
+        filters: action.payload,
         product: filteredProducts,
         pagination: {
           ...state.pagination,

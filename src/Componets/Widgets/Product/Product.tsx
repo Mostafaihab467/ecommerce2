@@ -22,15 +22,15 @@ function Product({ item, variant = 'latest' }: Props) {
           />
         </Link>
         <Card.Body className="product-card-body">
-          <Link to={`/Product/${item._id}`}>
+          <Link style={{textDecoration:'none'}} className='link' to={`/Product/${item._id}`}>
             <Card.Title as="div">
-              <strong className='text'>{item.name}</strong>
+              <span style={{color:'black'}} className='text'>{item.name}</span>
             </Card.Title>
           </Link>
           <Card.Text as="div">
             <Ratings rating={item.rating} numReviews={item.numReviews} />
           </Card.Text>
-          <Card.Text className="product-price" as="h4">
+          <Card.Text color='black' className="product-price" as="h4">
             ${item.price}
           </Card.Text>
           {variant === 'recommended' && (

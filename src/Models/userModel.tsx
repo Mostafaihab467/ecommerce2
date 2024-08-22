@@ -15,12 +15,12 @@ export class C_User {
     token =''
     isAdmin=false
 
-    constructor( email:string,password:string, name:string,token:string='', isAdmin:boolean=false,_id?:string){
+    constructor( email:string,password:string, name:string,token:string='', isAdmin:boolean=false,_id:string){
         this.email= email
         this.isAdmin =isAdmin,
         this.name =name,
         this.password = password,
         this.token = token,
-        this._id=_id!
+        this._id=_id
         }
 }

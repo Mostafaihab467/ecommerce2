@@ -4,7 +4,7 @@ import { ListGroup, Row, Col, Button, Form, Container, ListGroupItem } from 'rea
 import { useDispatch, useSelector } from 'react-redux';
 import { Login } from '../../store/Action/userAction';
 import { IUserModel } from '../../Models/userModel';
-import FacebookLogin from 'react-facebook-login';
+
 import { SET_REDIRECT_PATH } from '../../store/Action/RouterAction';
 
 
@@ -63,7 +63,7 @@ function LoginScreen() {
                             Google Login
                         </ListGroupItem>
 
-                        <ListGroupItem>
+                        {/* <ListGroupItem>
                             <FacebookLogin
                                 size='small'
                                 appId="1088597931155576"
@@ -73,7 +73,7 @@ function LoginScreen() {
                                 callback={() => { }}
                                 icon="fa-facebook"
                             />
-                        </ListGroupItem>
+                        </ListGroupItem> */}
                     </ListGroup>
                 </Col>
             </Row>

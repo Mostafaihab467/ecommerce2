@@ -50,8 +50,8 @@ const products = {
         });
     },
     productUpdate: (product: ProductModel) => axios.post('/api/products/EditProduct', product),
-    deleteProduct: (id: string) => axios.get(`/api/products/deleteProduct/${id}`)
-
+    deleteProduct: (id: string) => axios.get(`/api/products/deleteProduct/${id}`),
+    deleteProductImage:(payload:any)=>axios.post('/api/products/deleteProductImage',payload)
 
 }
 
@@ -73,11 +73,17 @@ const Order = {
     getMyOrders: () => axios.post('api/order/myorders')
 }
 
+
+const statstics={
+    getStatics:()=>axios.get("/api/Statstics/productStatstics"),
+}
+
 const agent = {
     products,
     Auth,
     Account,
-    Order
+    Order,
+    statstics
 }
 
 

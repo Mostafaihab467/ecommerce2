@@ -10,7 +10,8 @@ export interface ProductModel {
     numReviews: number,
     image: any,
     imageFile:any,
-    productimages:Array<string>
+    productimages:Array<string>,
+    user:string
 
 
 }
@@ -29,6 +30,7 @@ export class C_Product {
     image: any; // image url
     imageFile: any; // image File
     productimages:Array<string>
+    user:string
 
     constructor(
         _id: string,
@@ -42,7 +44,8 @@ export class C_Product {
         numReviews: number,
         image: any,
         imageFile:any,
-        productimages:Array<string>
+        productimages:Array<string>,
+        user:string
     ) {
         this._id = _id;
         this.name = name;
@@ -56,5 +59,6 @@ export class C_Product {
         this.image = image;
         this.imageFile = imageFile
         this.productimages = productimages;
+        this.user = user
     }
 }

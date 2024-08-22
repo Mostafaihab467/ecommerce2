@@ -41,6 +41,16 @@ export const InitProducts = (page: number = 1) => {
   };
 };
 
+
+export const deleteProductImage = (products: any) => {
+  return async (dispatch: any) => {
+    dispatch(DELETE_PRODUCT_IMAGE(products as any));
+    await agent.products.deleteProductImage(products).then((res) => {
+    });
+  };
+};
+
+
 export const AddProductImage = (products: any) => {
   return async (dispatch: any) => {
     await agent.products.AddProduct_Image(products).then((res) => {
@@ -62,7 +72,7 @@ export const setFilters = (filters: any) => ({
   payload: filters,
 });
 
-export const getProductByID = (id: string) => {
+export const getProductByID = (id: any) => {
   return async (dispatch: any) => {
     await agent.products.getProductbyId(id).then((res) => {
       dispatch(SELECTED_PRODUCT(res.data as ProductModel));
@@ -118,5 +128,10 @@ export const USER_ADD_PRODUCT = (payload: any) => ({
 
 export const ADD_PRODUCT_IMAGE = (payload: any) => ({
   type: "ADD_PRODUCT_IMAGE",
+  payload: payload,
+});
+
+export const DELETE_PRODUCT_IMAGE = (payload: any) => ({
+  type: "DELETE_PRODUCT_IMAGE",
   payload: payload,
 });

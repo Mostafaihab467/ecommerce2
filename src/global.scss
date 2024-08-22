@@ -1,0 +1,163 @@
+// Global SCSS
+
+// DarkMode
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --transition-duration: 0.5s; // Define a transition duration variable
+}
+
+body {
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+body.light-mode {
+  --text-color: #000000; /* Black text for light mode */
+}
+
+body.dark-mode {
+  --background-color: #121212;
+  --text-color: #ffffff; /* White text for dark mode */
+}
+
+.app-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+// Sidebar
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: var(--background-color);
+  padding: 10px;
+  color: var(--text-color);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+body.dark-mode .sidebar {
+  background-color: #1f1f1f;
+  color: var(--text-color);
+}
+
+.sidebar-body, .sidebar-title, .sidebar-checkbox, .sidebar-radio {
+  color: var(--text-color);
+  transition: color var(--transition-duration);
+}
+
+// Apply similar transitions to other elements as well
+.list-group-item {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid #ddd;
+  transition: background-color var(--transition-duration), color var(--transition-duration), border-color var(--transition-duration);
+}
+
+body.dark-mode .list-group-item {
+  background-color: #2a2a2a;
+  color: var(--text-color);
+  border: 1px solid #444;
+}
+
+// Card Product
+body.dark-mode .main_item_card {
+  background-color: #1f1f1f;
+  color: var(--text-color);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+body.dark-mode .product-card  {
+  border-color: #333;
+  background-color: #2a2a2a;
+  
+  color: #e0e0e0;
+  transition: background-color var(--transition-duration), border-color var(--transition-duration), color var(--transition-duration);
+
+  .text ,.product-price{
+    color:var(--text-color) !important;
+  }
+.link{
+  text-decoration: none !important;
+}
+
+}
+
+// Apply similar transitions to other elements as well
+.product-card-body strong, .product-card-body .text {
+  color: white;
+  transition: color var(--transition-duration);
+}
+
+// HomeScreen
+body.dark-mode .home-screen h1 {
+  color: var(--text-color);
+  transition: color var(--transition-duration);
+
+
+ 
+}
+
+// Apply similar transitions to other elements as well
+body.dark-mode .CartScreen h1, body.dark-mode .CartScreen .itemName {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+// Header
+body.dark-mode .Header .Search {
+  color: var(--text-color);
+  transition: color var(--transition-duration);
+}
+
+// Sidebar
+body.dark-mode .sidebarx .offcanvas-title {
+  color: white !important;
+  transition: color var(--transition-duration);
+  .speedometerDashboard {
+    color: white !important;
+  }
+ 
+ 
+}
+
+body.dark-mode  .sidebar-section{
+  .sidebar-heading{
+   color: white !important;
+  }
+
+ 
+   }
+// ProductOverviewScreen
+body.dark-mode .ProductOverViewScreen span, body.dark-mode .ProductOverViewScreen .h4 {
+  color: white !important;
+  transition: color var(--transition-duration);
+}
+
+// ProductImagesWidgetModal
+body.dark-mode .ProductImagesWidgetModal {
+  background-color: #121212;
+  transition: background-color var(--transition-duration);
+  .button {
+    background-color: black !important;
+    transition: background-color var(--transition-duration);
+  }
+  span {
+    color: white;
+    transition: color var(--transition-duration);
+  }
+}

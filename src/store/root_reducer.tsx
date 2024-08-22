@@ -8,13 +8,14 @@ import paymentReducer from './reducers/paymentReducer'
 import orderReducer from './reducers/orderReducer'
 import  RouterReducer  from './reducers/RouterReducer'
 import themeReducer from './reducers/AppState.Reducer'
+import StatsticsReducer from './reducers/StatsticsReducer'
 
 
 
 const PersistConfig={
     key:'root',
     storage,
-    whitelist:['cartRepo','user','payment','order']
+    whitelist:['cartRepo','user','payment','order','AppState']
   
   }
 
@@ -25,7 +26,8 @@ const PersistConfig={
       payment:paymentReducer,
       order:orderReducer,
       redirection:RouterReducer,
-      AppState:themeReducer
+      AppState:themeReducer,
+      statics:StatsticsReducer
 })
 
 const rootReducerCongured = persistReducer(PersistConfig,root_reducer)
