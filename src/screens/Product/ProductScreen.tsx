@@ -24,6 +24,7 @@ import Spinner from "../../Componets/Widgets/Spinner/Spinner";
 import { Add_toCart } from "../../store/Action/cartAction";
 import { IUserModel } from "../../Models/userModel";
 import  {resizeImage}  from "../../Componets/Utlity/ResizieImage";
+import ProductImagesModal from '../../Componets/Widgets/Modal/ProductImagesWidgetModal';
 
 // Define the type for the component state
 interface ProductScreenState {
@@ -325,6 +326,7 @@ const ProductScreen: React.FC = () => {
                           </Button>
                         </Col>
                       </Row>
+                    
                     </ListGroup.Item>
                   </ListGroup>
                 </Card>

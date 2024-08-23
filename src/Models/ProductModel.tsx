@@ -11,13 +11,18 @@ export interface ProductModel {
     image: any,
     imageFile:any,
     productimages:Array<string>,
-    user:string
+    user:string,
+    productsSecs:Array<ProductSpec>
 
 
 }
+export type ProductSpec = {
+    key: string;
+    value: string;
+  };
+  
 
-
-export class C_Product {
+export class C_Product implements ProductModel {
     _id: string;
     name: string;
     description: string;
@@ -30,7 +35,8 @@ export class C_Product {
     image: any; // image url
     imageFile: any; // image File
     productimages:Array<string>
-    user:string
+    user:string;
+    productsSecs:Array<ProductSpec>;
 
     constructor(
         _id: string,
@@ -45,7 +51,8 @@ export class C_Product {
         image: any,
         imageFile:any,
         productimages:Array<string>,
-        user:string
+        user:string,
+        productsSecs:Array<ProductSpec>
     ) {
         this._id = _id;
         this.name = name;
@@ -60,5 +67,9 @@ export class C_Product {
         this.imageFile = imageFile
         this.productimages = productimages;
         this.user = user
+        this.productsSecs = productsSecs;
     }
 }
+
+ const Emptyproduct = new C_Product("", "", "", "", "", 0, 0, 0, 0, "", "", [], "",[])
+ export {Emptyproduct}

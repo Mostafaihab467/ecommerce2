@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import Product from "../../Componets/Widgets/Product/Product";
-import { C_Product, ProductModel } from "../../Models/ProductModel";
+import {  Emptyproduct, ProductModel } from "../../Models/ProductModel";
 import { useDispatch, useSelector } from "react-redux";
 import Carosal from "../../Componets/Widgets/Curosal/Carosal";
 import "./HomeScreen.scss"; // Import the updated styles
@@ -16,36 +16,24 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
   const products = useSelector(
     (state: any) => state.productRepo.product
   ) as ProductModel[];
-  const { itemsPerPage, totalPages } = useSelector(
+  const { itemsPerPage } = useSelector(
     (state: any) => state.productRepo.pagination
   );
 
   const { pageChange } = useSelector((state: any) => state.productRepo);
-  const [view, setView] = useState('grid');  // Default view is grid
+  const [view, setView] = useState('list');  // Default view is grid
+  window.addEventListener('resize', () => {
+    if(window.innerWidth < 900){
+      setView('list')
+    }
+  });
+  
   // Adjust as needed
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(SELECTED_PRODUCT(new C_Product("", "", "", "", "", 0, 0, 0, 0, "", "", [], "")))
-    if (products.length > 0) {
-      // Shuffle the products array
-      const shuffleArray = (array: ProductModel[]) => {
-        let currentIndex = array.length,
-          randomIndex;
-        while (currentIndex !== 0) {
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex--;
-          [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex],
-            array[currentIndex],
-          ];
-        }
-        return array;
-      };
-
-      // Shuffle and set the products
-
-    }
+    dispatch(SELECTED_PRODUCT(Emptyproduct) )
+   
   }, [products]);
 
   // Calculate the index of the last product to display

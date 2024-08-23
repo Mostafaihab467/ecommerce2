@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Image, Alert, FormLabel } from 'react-bootstrap';
+import { Form, Button, Container, Image, Alert, FormLabel, Row, Col } from 'react-bootstrap';
 import './AddProductScreen.scss';
 import { useDispatch } from 'react-redux';
 import { userAddProduct } from '../../store/Action/ProductAction';
+import AddProductSpecsModal from '../../Componets/Widgets/Modal/ProductImagesWidgetModal';
 
 const AddProductForm: React.FC = () => {
+    const formDataToSubmit = new FormData();
     const dispatch = useDispatch();
-    
+    const [modalShow, setModalShow] = useState(false);
+    const handleShow = () => setModalShow(true);
+    const handleClose = () => setModalShow(false);
     const [formData, setFormData] = useState({
         user: '',
         name: '',
@@ -18,6 +22,7 @@ const AddProductForm: React.FC = () => {
         price: '',
         countInStock: '',
         removeBackground: false, // New state for remove background checkbox
+        productsSecs:''
     });
 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -55,7 +60,7 @@ const AddProductForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formDataToSubmit = new FormData();
+       
         formDataToSubmit.append('user', formData.user);
         formDataToSubmit.append('name', formData.name);
         formDataToSubmit.append('category', formData.category);
@@ -65,12 +70,14 @@ const AddProductForm: React.FC = () => {
         formDataToSubmit.append('price', formData.price);
         formDataToSubmit.append('countInStock', formData.countInStock);
         formDataToSubmit.append('removeBackground', formData.removeBackground.toString());
-
+        if(formData.productsSecs!=='') {
+        formDataToSubmit.append('productsSecs', formData.productsSecs);
+        }
         if (formData.image) {
             formDataToSubmit.append('image', formData.image);
         }
 
-        console.log('FormData contents:');
+            console.log('FormData productsSecs contents:' ,formDataToSubmit.get("productsSecs"));
         formDataToSubmit.forEach((value, key) => {
             console.log(key, value);
         });
@@ -126,12 +133,12 @@ const AddProductForm: React.FC = () => {
                         name="removeBackground"
                         checked={formData.removeBackground}
                         onChange={handleCheckboxChange}
-                        />
-                          {!formData.removeBackground && (
+                    />
+                    {!formData.removeBackground && (
                         <Alert variant="primary" className="mt-2">
-                           Do you want to remove Image BackGround
+                            Do you want to remove Image BackGround
                         </Alert>
-                          )}
+                    )}
                     {formData.removeBackground && (
                         <Alert variant="danger" className="mt-2">
                             Warning: Removing the background may corrupt the image.
@@ -208,9 +215,18 @@ const AddProductForm: React.FC = () => {
                     />
                 </Form.Group>
 
+                <Container className='d-flex justify-content-between'>
+
                 <Button variant="primary" type="submit">
                     Add Product
                 </Button>
+
+                <Button variant="danger" onClick={handleShow}>
+                    Add Product Specs
+                </Button>
+                <AddProductSpecsModal formData={formData} setFormData={setFormData} show={modalShow} handleClose={handleClose} />
+                </Container>
+                
             </Form>
         </Container>
     );

@@ -1,11 +1,11 @@
-import { C_Product, ProductModel } from "./../../Models/ProductModel";
+import { C_Product, Emptyproduct, ProductModel } from "./../../Models/ProductModel";
 
 let initialState = {
   AllProducts: new Array<C_Product>(),
   product: new Array<C_Product>(),
   pageChange: 1,
   cachedPages: [],
-  selectedProduct: new C_Product("", "", "", "", "", 0, 0, 0, 0, 0, "null", [], ""),
+  selectedProduct: Emptyproduct,
   filters: {
     categories: [] as string[],
     priceRange: { min: 0, max: Infinity },

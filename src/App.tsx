@@ -22,11 +22,12 @@ import AdminsEditScreen from './screens/Admin/ProductScreen/AdminsEditScreen';
 import Sidebar from './Componets/Widgets/Filtration/Filtration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddProductForm from './screens/AddProduct/AddProductScreen';
-import ProductImagesModal from './Componets/Widgets/Modal/ProductImagesWidgetModal';
 import Dashboard from './screens/Dashboard/Dashboard';
 import { IntiateSocket } from './store/Action/SocketAction';
 import { IUserModel } from './Models/userModel';
 import Admins from './Componets/HOC/Admin'
+import ProductImagesModal from './Componets/Widgets/Modal/AddProductSpecsModal/AddProductSpecsModal';
+
 
 
 
@@ -34,9 +35,8 @@ function App(props: any) {
   const { cachedPages,pageChange }  = (useSelector((state: any) => state.productRepo)) ; 
   const user  = (useSelector((state: any) => state.user.user))  as IUserModel; 
   const dispatch = useDispatch();
-
   window.addEventListener('resize', () => {
-    console.log(`Width: ${window.innerWidth}, Height: ${window.innerHeight}`);
+   
 });
 
   

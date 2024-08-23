@@ -1,82 +1,81 @@
-// src/pages/ProductImagesModal.tsx
-import React from "react";
-import { Button, Modal, Row, Col } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { ProductModel } from "../../../Models/ProductModel";
-import './ProductImagesWidgetModal.scss'
-import { deleteProductImage } from "../../../store/Action/ProductAction";
-function ProductImagesModal() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const selectedProduct = useSelector(
-    (state: any) => state.productRepo.selectedProduct
-  ) as ProductModel;
+import React, { useState, ChangeEvent } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { ProductSpec } from '../../../Models/ProductModel';
 
-  const handleClose = () => {
-    navigate(-1); // Navigate back to the previous page
-  };
+// Define a type for the specification
+interface Spec {
+  key: string;
+  value: string;
+}
+
+interface AddProductSpecsModalProps {
+  show: boolean;
+  handleClose: () => void;
+  setFormData:(data:any)=>void
+  formData:any
+}
+
+const AddProductSpecsModal: React.FC<AddProductSpecsModalProps> = ({ show, handleClose ,setFormData,formData}) => {
+  const [specs, setSpecs] = useState<Spec[]>([{ key: '', value: '' }]);
   
-
-
- 
-  const handleDelete =  (image: string) => {
-    // Add your delete logic here
-    console.log("Deleting image:", image);
-    const payload = {
-        image:image,
-        productId: selectedProduct._id,
-    }
-
-    dispatch(deleteProductImage(payload))
+  const handleChange = (index: number, field: 'key' | 'value', value: string) => {
+    const newSpecs = [...specs];
+    newSpecs[index] = { ...newSpecs[index], [field]: value };
+    setSpecs(newSpecs);
   };
-  return (
-    <Modal  show onHide={handleClose} size="lg" centered>
-      <Modal.Header className="ProductImagesWidgetModal" closeButton>
-        <Modal.Title>
-            <span>
 
-            Product Images
-            </span>
-            </Modal.Title>
+  const handleAddInput = () => {
+    setSpecs([...specs, { key: '', value: '' }]);
+  };
+
+  const handleSubmit = () => {
+    setFormData({...formData,'productsSecs':JSON.stringify(specs)})
+    
+    handleClose();
+  };
+
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Product Specifications</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="ProductImagesWidgetModal">
-        <Row>
-          <Col md={12} className="mb-3">
-            <div style={{cursor:'pointer'}}  className="image-container">
-              <img
-                className="img-fluid" 
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
+      <Modal.Body>
+        {specs.map((spec, index) => (
+          <div key={index} className="mb-3">
+            <Form.Group controlId={`formKey${index}`}>
+              <Form.Label>Key</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter key"
+                value={spec.key}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(index, 'key', e.target.value)}
               />
-              <i style={{cursor:'pointer'}}  className="fas fa-trash delete-icon" onClick={() => handleDelete(selectedProduct.image)}></i>
-            </div>
-          </Col>
-          {selectedProduct.productimages.map((img, index) => (
-            <Col md={4} key={index} className="mb-3">
-              <div className="image-container">
-                <img
-                  className="img-fluid"
-                  src={img}
-                  alt={`Product image ${index + 1}`}
-                />
-                <i  style={{cursor:'pointer'}} className="fas fa-trash delete-icon" onClick={() => handleDelete(img)}></i>
-              </div>
-            </Col>
-          ))}
-        </Row>
+            </Form.Group>
+            <Form.Group controlId={`formValue${index}`}>
+              <Form.Label>Value</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter value"
+                value={spec.value}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(index, 'value', e.target.value)}
+              />
+            </Form.Group>
+          </div>
+        ))}
+        <Button variant="secondary" onClick={handleAddInput}>
+          Add Another
+        </Button>
       </Modal.Body>
-      <Modal.Footer className="ProductImagesWidgetModal">
-        <Button className="botton" variant="secondary" onClick={handleClose}>
-         <span>
-             Close
-            </span>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          Save Changes
         </Button>
       </Modal.Footer>
     </Modal>
   );
+};
 
-}
-
-export default ProductImagesModal;
+export default AddProductSpecsModal;

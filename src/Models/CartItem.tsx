@@ -1,10 +1,10 @@
-import { C_Product, ProductModel } from "./ProductModel";
+import { Emptyproduct, ProductModel } from "./ProductModel";
 
 
-const prod =new C_Product('','','','','',0,0,0,0,0,"",[],"") 
+const prod =Emptyproduct
 
 export class C_CartItem  {
-    cartItem =new C_Product('','','','','',0,0,0,0,0,"",[],"") 
+    cartItem =Emptyproduct
     qty = 0
     id=''
     constructor(cartItem:ProductModel=prod,qty:number=0,id:string=''){
