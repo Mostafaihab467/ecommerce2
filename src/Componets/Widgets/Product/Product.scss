@@ -1,71 +1,107 @@
 .main_item_card {
-    padding: 10px;
-    margin-top: 50px;
-    width: 250px;
-    height: 350px; /* Consistent height for all cards */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Ensure content is spaced out */
-    background-color: var(--background-color); /* Adapt to dark/light mode */
-    color: #ffffff; /* Ensure text is white */
-}
-  
-.product-image {
-    width: 100%;
-    height: 350px;
-    /* Ensures the image covers the specified height and width while maintaining aspect ratio */
-    border-radius: 8px;
-}
-  
-.product-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%; /* Ensure the card stretches to fill its container */
-    background-color: var(--card-background-color); /* Adapt to dark/light mode */
-    color: #ffffff; /* Ensure text is white */
-  
-    &.latest {
-      background-color: #fff;
-    }
-  
-    &.recommended {
-      margin-top: 50px; /* Reduced margin for a balanced layout */
-      background-color: #f9f9f9;
-      border-color: #e0e0e0;
-      position: relative;
-  
-      .product-image {
-        object-fit: cover;  
-        height: 200px; /* Adjusted for a balanced design */
-      }
-  
-      .product-card-body {
-        padding: 15px;
-        text-align: center;
-      }
-  
-      .recommended-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: #ffcc00;
-        color: #333;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-weight: bold;
-      }
-    }
-  
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
-    }
+  padding: 10px;
+  margin-top: 50px;
+  width: 250px;
+  height: 350px; /* Consistent height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure content is spaced out */
+  background-color: var(--background-color); /* Adapt to dark/light mode */
+  color: #ffffff; /* Ensure text is white */
 }
 
-  
+.product-image {
+  width: 100%;
+  height: 350px;
+  /* Ensures the image covers the specified height and width while maintaining aspect ratio */
+  border-radius: 8px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%; /* Ensure the card stretches to fill its container */
+  background-color: var(--card-background-color); /* Adapt to dark/light mode */
+  color: #ffffff; /* Ensure text is white */
+
+  &.latest {
+    background-color: #fff;
+  }
+
+  &.recommended {
+    margin-top: 50px; /* Reduced margin for a balanced layout */
+    background-color: #f9f9f9;
+    border-color: #e0e0e0;
+    position: relative;
+
+    .product-image {
+      object-fit: cover;
+      height: 200px; /* Adjusted for a balanced design */
+    }
+
+    .product-card-body {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .recommended-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #ffcc00;
+      color: #333;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+  }
+}
+//list
+.product-card-content {
+  .card_wrapper {
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 2px  rgb(196, 196, 196);
+    border:1px solid rgb(160, 160, 160);
+    width: 800px;
+    padding: 10px
+  }
+  &:hover{
+    transition: 0.3s;
+    scale: 1.1;
+  }
+    .product-image {
+      width: 350px;
+    }
+    .item_name{
+      height: 80px;
+      max-height: 80px;
+    }
+    .item_description{
+      height: 250px;
+      max-height: 250px;
+    
+    }
+    .item_footer{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    h1,h2{
+      font-size: 15px;
+    }
+    
+  }
+
+
 /* Dark mode support */

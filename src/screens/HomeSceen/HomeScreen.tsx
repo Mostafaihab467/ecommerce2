@@ -7,7 +7,7 @@ import Carosal from "../../Componets/Widgets/Curosal/Carosal";
 import "./HomeScreen.scss"; // Import the updated styles
 import ProductPagination from "../../Componets/Widgets/Pagination/Pagination";
 import { SELECTED_PRODUCT } from "../../store/Action/ProductAction";
-
+import { FaTh, FaList } from 'react-icons/fa';
 interface HomeScreenProps {
   onPageChange: (pageNumber: number) => void;
 }
@@ -19,13 +19,14 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
   const { itemsPerPage, totalPages } = useSelector(
     (state: any) => state.productRepo.pagination
   );
- 
-  const { pageChange } = useSelector((state: any) => state.productRepo);
 
+  const { pageChange } = useSelector((state: any) => state.productRepo);
+  const [view, setView] = useState('grid');  // Default view is grid
+  // Adjust as needed
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(SELECTED_PRODUCT(new C_Product("","","","","",0,0,0,0,"","",[],"")))
+    dispatch(SELECTED_PRODUCT(new C_Product("", "", "", "", "", 0, 0, 0, 0, "", "", [], "")))
     if (products.length > 0) {
       // Shuffle the products array
       const shuffleArray = (array: ProductModel[]) => {
@@ -43,7 +44,7 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
       };
 
       // Shuffle and set the products
-      
+
     }
   }, [products]);
 
@@ -57,22 +58,54 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
     indexOfLastProduct
   ).sort();
 
-  if(currentProducts.length == 0){
+  if (currentProducts.length == 0) {
     currentProducts = products.slice(-8);
   }
   return (
     <div className="home-screen">
+      {/* View Switcher */}
+      <div className="view-switcher">
+        <button
+          className={`view-switcher-button ${view === 'grid' ? 'active' : ''}`}
+          onClick={() => setView('grid')}
+        >
+          <FaTh />
+        </button>
+        <button
+          className={`view-switcher-button ${view === 'list' ? 'active' : ''}`}
+          onClick={() => setView('list')}
+        >
+          <FaList />
+        </button>
+      </div>
+
       <Carosal products={products} />
       {products && products.length > 0 ? (
         <>
           <h1 className="text-center">Latest Products</h1>
-          <Row>
-            {currentProducts.map((product: ProductModel) => (
-              <Col key={product._id} xs={12} sm={6} md={4} lg={3} xl={3}>
-                <Product item={product} />
-              </Col>
-            ))}
-          </Row>
+          {view === 'list' ?
+            <Row>
+              {currentProducts.map((product) => (
+                <Col
+                  key={product._id}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  xl={3}
+                  className={`product-col ${view === 'list' ? 'list-view' : 'grid-view'}`}
+                >
+                  <Product grid={view} item={product} />
+
+                </Col>
+              ))}
+            </Row>
+            : <Col xl={4}>
+
+              {currentProducts.map((product) => (
+                <Product grid={view}  item={product} />
+              ))}
+            </Col>}
           {/* Pagination Controls */}
           <div className="pagination-container">
             <ProductPagination />
@@ -83,7 +116,7 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
             <Row>
               {products.length > 0 && (
                 <Col key={products[0]._id} xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <Product item={products[0]} variant="recommended" />
+                  <Product grid={view} item={products[0]} variant="recommended" />
                 </Col>
               )}
             </Row>

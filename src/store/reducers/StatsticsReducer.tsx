@@ -21,6 +21,7 @@ const themeReducer = (state = initialState, action: Action) => {
       return {
         ...state,
         statstics: action.payload,
+        
       };
       case'SERVER_HEALTH':
       return {...state,serverHealth:action.payload

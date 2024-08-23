@@ -57,6 +57,9 @@ export interface ISystemStats {
     };
     loadAverage: number[];
     uptime: number;
+    requestCount:number,
+    requestsPerSecond:number
+   
   }
   export class C_SystemStats implements ISystemStats {
     cpuUsage = {
@@ -76,7 +79,8 @@ export interface ISystemStats {
     };
     loadAverage: number[] = [0, 0, 0];
     uptime = 0;
-  
+    requestCount=0
+    requestsPerSecond=0
     constructor(
       userCpuPercent: string = '0.00%',
       systemCpuPercent: string = '0.00%',
@@ -88,7 +92,10 @@ export interface ISystemStats {
       freeMemory: string = '0.00 GB',
       usedMemory: string = '0.00 GB',
       loadAverage: number[] = [0, 0, 0],
-      uptime: number = 0
+      uptime: number = 0,
+      requestCount:number =0,
+      requestsPerSecond:number=0
+    
     ) {
       this.cpuUsage.user = userCpuPercent;
       this.cpuUsage.system = systemCpuPercent;
@@ -101,6 +108,9 @@ export interface ISystemStats {
       this.systemMemory.usedMemory = usedMemory;
       this.loadAverage = loadAverage;
       this.uptime = uptime;
+      this.requestCount = requestCount;
+      this.requestsPerSecond=requestsPerSecond
+      
     }
   }
   

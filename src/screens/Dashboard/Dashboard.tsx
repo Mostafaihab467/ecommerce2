@@ -6,7 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { useDispatch, useSelector } from 'react-redux';
 import { get_statstics } from '../../store/Action/statsticsAction';
 import { IStatstics, ISystemStats } from '../../Models/StatsticsModel';
-
+import './Dashboard.scss'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, RadialLinearScale, Title, Tooltip, Legend);
 
 const Dashboard = () => {
@@ -14,21 +14,16 @@ const Dashboard = () => {
 
     const statics = useSelector((state: any) => state.statics.statstics) as IStatstics;
     const serverhealth = useSelector((state: any) => state.statics.serverHealth) as ISystemStats;
-  const [currentserverhealth,setServerHealth] = useState<ISystemStats>(serverhealth) 
+   
     useEffect(() => {
-      // Initial fetch
-      dispatch(get_statstics());
-      
-      // Set up an interval to fetch the data periodically
-      const intervalId = setInterval(() => {
-        setServerHealth(serverhealth)
-          dispatch(get_statstics());
-          console.log("Data fetched at interval:", new Date());
-      }, 5000); // Update every 5 seconds
-     
-      // Cleanup the interval on component unmount
-      return () => clearInterval(intervalId);
-  }, [dispatch]);
+        // Initial fetch
+        dispatch(get_statstics());
+       setInterval((
+
+       )=>{},1000)
+        // Set up an interval to fetch the data periodically
+
+    }, [dispatch]);
 
     const lineChartData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -107,95 +102,106 @@ const Dashboard = () => {
     const freeMemory = parseMemoryString(serverhealth.systemMemory?.freeMemory);
     const usedMemory = parseMemoryString(serverhealth.systemMemory?.usedMemory);
     const totalMemory = freeMemory + usedMemory;
+ 
     return (
-      <h1>Free Memory: {currentserverhealth.systemMemory.freeMemory}</h1>
-        // <Container fluid>
-       
-        //     <Row className="mt-4">
-        //         <Col md={6}>
-        //             <Card className="mb-4">
-        //                 <Card.Header as="h5">Monthly Sales Overview</Card.Header>
-        //                 <Card.Body>
-        //                     <Line data={lineChartData} />
-        //                 </Card.Body>
-        //             </Card>
-        //         </Col>
-        //         <Col md={6}>
-        //             <Card className="mb-4">
-        //                 <Card.Header as="h5">Top Product Categories</Card.Header>
-        //                 <Card.Body>
-        //                     <Bar data={barChartData} />
-        //                 </Card.Body>
-        //             </Card>
-        //         </Col>
-        //     </Row>
-        //     <Row>
-        //         <Col md={4}>
-        //             <Card className="mb-4">
-        //                 <Card.Header as="h5">Order Status</Card.Header>
-        //                 <Card.Body>
-        //                     <Doughnut data={doughnutChartData} />
-        //                 </Card.Body>
-        //             </Card>
-        //         </Col>
-        //         <Col md={4}>
-        //             <Card className="mb-4">
-        //                 <Card.Header as="h5">Customer Satisfaction</Card.Header>
-        //                 <Card.Body>
-        //                     <Radar data={radarChartData} />
-        //                 </Card.Body>
-        //             </Card>
-        //         </Col>
-        //         <Col md={4}>
-        //         <Card className="mb-4">
-        //     <Card.Header as="h5">Server Health</Card.Header>
-        //     <Card.Body>
-        //         <p>CPU Usage</p>
-        //         <ProgressBar 
-        //             now={parseFloat(serverhealth.cpuUsage?.user) || 0} 
-        //             label={`${serverhealth.cpuUsage?.user || 0}%`} 
-        //         />
-        //         <p className="mt-3">Memory Free</p>
-        //         <ProgressBar 
-        //             now={(freeMemory / totalMemory) * 100 || 0} 
-        //             label={`${freeMemory.toFixed(2)} MB`} 
-        //             variant="warning" 
-        //         />
-        //         <p className="mt-3">Used Memory</p>
-        //         <ProgressBar 
-        //             now={(usedMemory / totalMemory) * 100 || 0} 
-        //             label={`${usedMemory.toFixed(2)} MB`} 
-        //             variant="success" 
-        //         />
-        //     </Card.Body>
-        // </Card>
-        //         </Col>
-        //     </Row>
-        //     <Row>
-        //         <Col md={12}>
-        //             <Card className="text-center">
-        //                 <Card.Body>
-        //                     <Link to="/AdminsEditScreen">
-        //                         <Button variant="primary" size="lg">
-        //                             Manage Products
-        //                         </Button>
-        //                     </Link>
-        //                 </Card.Body>
-        //             </Card>
-        //         </Col>
-        //     </Row>
-        // </Container>
+        <Container>
+            <Row className="mt-4">
+                <Col md={6}>
+                    <Card className="mb-4">
+                        <Card.Header as="h5">Monthly Sales Overview</Card.Header>
+                        <Card.Body>
+                            <Line data={lineChartData} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={6}>
+                    <Card className="mb-4">
+                        <Card.Header as="h5">Top Product Categories</Card.Header>
+                        <Card.Body>
+                            <Bar data={barChartData} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col md={4}>
+                    <Card className="mb-4">
+                        <Card.Header as="h5">Order Status</Card.Header>
+                        <Card.Body>
+                            <Doughnut data={doughnutChartData} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                    <Card className="mb-4">
+                        <Card.Header as="h5">Customer Satisfaction</Card.Header>
+                        <Card.Body>
+                            <Radar data={radarChartData} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+                <Card className="mb-4">
+                        <Card.Header as="h5">Server Health</Card.Header>
+                        <Card.Body>
+                        <p>  Request/s </p>
+                            <ProgressBar
+                                now={((freeMemory / totalMemory) * 100) *2|| 0}
+                                label={`${serverhealth.requestsPerSecond} req/s`}
+                                variant='danger'
+                            />
+                            <p> Total Request </p>
+                            <ProgressBar
+                                now={((freeMemory / totalMemory) * 100) *2|| 0}
+                                label={`${serverhealth.requestCount} req`}
+                                className="custom-progress-bar"
+                            />
+                            <p className="mt-3">Memory Free</p>
+                            <ProgressBar
+                                now={((freeMemory / totalMemory) * 100) *2|| 0}
+                                label={`${freeMemory.toFixed(2)} GB`}
+                                variant="warning"
+                                className="custom-progress-bar custom-progress-bar-warning"
+                            />
+                            <p className="mt-3">Used Memory</p>
+                            <ProgressBar
+                                now={(usedMemory / totalMemory) * 100 || 0}
+                                label={`${usedMemory.toFixed(2)} GB`}
+                                variant="success"
+                                className="custom-progress-bar custom-progress-bar-success"
+                            />
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                    <Card className="text-center">
+                        <Card.Body>
+                            <Link to="/AdminsEditScreen">
+                                <Button variant="primary" size="lg">
+                                    Manage Products
+                                </Button>
+                            </Link>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
+
     );
 };
-const parseMemoryString = (memoryString:any) => {
-  if (!memoryString) return 0; // Handle empty or undefined strings
+const parseMemoryString = (memoryString: any) => {
+    if (!memoryString) return 0; // Handle empty or undefined strings
 
-  const memoryValue = parseFloat(memoryString); // Extract the numeric part
-  if (memoryString.includes('GB')) {
-      return memoryValue * 1024; // Convert GB to MB
-  } else if (memoryString.includes('MB')) {
-      return memoryValue; // Already in MB, no conversion needed
-  }
-  return 0; // Fallback if format is unexpected
+    const memoryValue = parseFloat(memoryString); // Extract the numeric part
+    if (memoryString.includes('GB')) {
+        return memoryValue ; // Convert GB to MB
+    } else if (memoryString.includes('MB')) {
+        return memoryValue; // Already in MB, no conversion needed
+    }
+    return 0; // Fallback if format is unexpected
 };
 export default Dashboard;
+// <Container fluid>
+

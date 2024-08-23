@@ -11,4 +11,17 @@
       margin-top: 10px;
     }
   }
-  
+
+/* Dashboard.css */
+.custom-progress-bar {
+  background-color: #e9ecef; /* Light gray background for the bar */
+}
+.custom-progress-bar .progress-bar {
+  background-color: #28a745; /* Green color for the progress */
+}
+.custom-progress-bar-warning .progress-bar {
+  background-color: #ffc107; /* Yellow color for warning progress */
+}
+.custom-progress-bar-success .progress-bar {
+  background-color: #17a2b8; /* Teal color for success progress */
+}

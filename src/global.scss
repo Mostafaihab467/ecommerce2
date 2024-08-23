@@ -160,3 +160,12 @@ body.dark-mode .ProductImagesWidgetModal {
     transition: color var(--transition-duration);
   }
 }
+
+// productCard 
+
+body.dark-mode .product-card-content{
+
+  h1,h2{
+    color: white !important;
+  }
+}

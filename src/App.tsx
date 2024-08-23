@@ -25,12 +25,14 @@ import AddProductForm from './screens/AddProduct/AddProductScreen';
 import ProductImagesModal from './Componets/Widgets/Modal/ProductImagesWidgetModal';
 import Dashboard from './screens/Dashboard/Dashboard';
 import { IntiateSocket } from './store/Action/SocketAction';
-
+import { IUserModel } from './Models/userModel';
+import Admins from './Componets/HOC/Admin'
 
 
 
 function App(props: any) {
   const { cachedPages,pageChange }  = (useSelector((state: any) => state.productRepo)) ; 
+  const user  = (useSelector((state: any) => state.user.user))  as IUserModel; 
   const dispatch = useDispatch();
 
   window.addEventListener('resize', () => {
@@ -44,13 +46,15 @@ function App(props: any) {
     //API Key = FernCsYysABnnUyK8HcriX2a
 var x = []
   if(!cachedPages.includes(pageChange)){
-   // dispatch(IntiateSocket())
+    if(user.isAdmin){
+    dispatch(IntiateSocket())
+    }
     dispatch(InitProducts(pageChange)); // Fetch the first page by default
     dispatch(SET_CURRENT_PAGE(pageChange))
   }
 
     
-  }, [pageChange]);
+  }, [pageChange,user]);
 
   const handlePageChange = (pageNumber: number) => {
     dispatch(SET_CURRENT_PAGE(pageNumber)); // Update the current page
@@ -65,10 +69,14 @@ var x = []
         <main className="main-content">
           <Routes>
             <Route path="/" element={<HomeScreen onPageChange={handlePageChange} />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+           
+            <Route path="/dashboard" element={  <Admins user={user}>
+              <Dashboard />
+            </Admins>} />
+
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/shipping" element={<Shipping />} />
-            <Route path="/register" element={<RegistrationScreen />} />
+            <Route path="/regi/>ster" element={<RegistrationScreen />} />
             <Route path="/product-images/:id" element={<ProductImagesModal />} />
             <Route path="/Product/:id" element={<ProductScreen />} />
             <Route path="/payment" element={<PaymentScreen />} />

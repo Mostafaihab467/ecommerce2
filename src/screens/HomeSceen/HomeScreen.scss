@@ -1,19 +1,144 @@
 .home-screen {
-    .recommended-products {
-      margin-top: 2rem; // Add margin to separate from other content
-    }
-  
-    .pagination-container {
-      display: flex;
-      justify-content: center; // Center the pagination
-      margin-top: 2rem; // Add top margin for spacing
-      padding: 1rem; // Add padding for better spacing
-    }
-  
-    .pagination {
-      display: flex;
-      justify-content: center; // Center pagination items
-      gap: 0.5rem; // Add some space between pagination items
+  .view-switcher {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+
+    .view-switcher-button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+      
+      // Add some styling for hover effect
+      &:hover {
+        color: #0056b3;  // A darker shade of blue or any color you prefer
+        transform: scale(1.1);
+      }
+
+      &.active {
+        color: #007bff;  // Bootstrap primary color or your choice
+      }
     }
   }
-  
+
+  .product-col {
+    // General styles for the product column
+    padding: 0.5rem;
+
+    // Styles specific to list view
+    &.list-view {
+      .product {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem;
+        margin-bottom: 1rem;
+
+        .product-image {
+          flex-shrink: 0;
+          margin-right: 1rem;
+          img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 4px;
+          }
+        }
+
+        .product-details {
+          flex: 1;
+          
+          .product-name {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .product-price {
+            color: #28a745;  // Bootstrap success color or your choice
+          }
+        }
+      }
+    }
+
+    // Styles specific to grid view
+    &.grid-view {
+      .product {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        padding: 1rem;
+
+        .product-image {
+          img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+          }
+        }
+
+        .product-details {
+          text-align: center;
+
+          .product-name {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+          }
+
+          .product-price {
+            color: #28a745;  // Bootstrap success color or your choice
+          }
+        }
+      }
+    }
+  }
+
+  .recommended-products {
+    margin-top: 1rem;
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    .product-col {
+      margin-bottom: 1rem;
+
+      .product {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 1rem;
+        text-align: center;
+
+        .product-image {
+          img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+          }
+        }
+
+        .product-details {
+          .product-name {
+            font-size: 1.125rem;
+            margin: 0.5rem 0;
+          }
+
+          .product-price {
+            color: #28a745;  // Bootstrap success color or your choice
+          }
+        }
+      }
+    }
+  }
+
+  // Pagination controls
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+}
