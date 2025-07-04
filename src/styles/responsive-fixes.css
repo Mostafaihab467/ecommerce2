@@ -1,0 +1,204 @@
+/* Global Responsive Fixes */
+
+/* Prevent horizontal overflow on all elements */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Bootstrap Container Fixes */
+.container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow-x: hidden;
+}
+
+/* Bootstrap Row Fixes */
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+  overflow-x: hidden;
+}
+
+/* Bootstrap Column Fixes */
+.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, 
+.col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
+.col-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, 
+.col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, 
+.col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-auto,
+.col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, 
+.col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, 
+.col-md-10, .col-md-11, .col-md-12, .col-md-auto,
+.col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, 
+.col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, 
+.col-lg-10, .col-lg-11, .col-lg-12, .col-lg-auto,
+.col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, 
+.col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, 
+.col-xl-10, .col-xl-11, .col-xl-12, .col-xl-auto {
+  padding-left: 15px;
+  padding-right: 15px;
+  min-width: 0; /* Prevent flexbox overflow */
+  word-wrap: break-word;
+}
+
+/* Mobile-specific responsive fixes */
+@media (max-width: 767.98px) {
+  .row {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  
+  [class*="col-"] {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .container-fluid {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* Card and Content Fixes */
+.card {
+  max-width: 100%;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.card-body {
+  padding: 1rem;
+  word-wrap: break-word;
+}
+
+.card-title {
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.card-text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Image Responsive Fixes */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Text Overflow Fixes */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-wrap {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Link and Button Fixes */
+a, button {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Flexbox Fixes */
+.d-flex {
+  min-width: 0;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+/* Grid System Improvements */
+.products-grid .col, 
+.products-list .col,
+.recommended-grid .col {
+  display: flex;
+  flex-direction: column;
+}
+
+.products-grid .product-card,
+.products-list .product-card,
+.recommended-grid .product-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Prevent transform overflow issues */
+.product-card-content:hover {
+  z-index: 1;
+}
+
+/* Mobile landscape optimizations */
+@media (max-width: 991.98px) and (orientation: landscape) {
+  .home-screen {
+    padding: 0.5rem;
+  }
+  
+  .view-switcher {
+    margin-bottom: 1rem;
+  }
+  
+  .products-grid .product-col,
+  .products-list .product-col {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 375px) {
+  .home-screen {
+    padding: 0.25rem;
+  }
+  
+  .products-grid,
+  .products-list {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+  
+  .product-col {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+}
+
+/* Performance optimizations */
+.product-card,
+.product-card-content {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Focus and accessibility */
+.view-switcher-button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .view-switcher,
+  .pagination-container {
+    display: none;
+  }
+  
+  .product-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

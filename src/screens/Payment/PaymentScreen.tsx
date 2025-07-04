@@ -18,7 +18,7 @@ function Payment() {
  const handleChange=(e:any)=>{
   e.preventDefault()
   dispatch(setPayment(paymentMehod))
-  nav('../placeOrder')
+      nav('/placeOrder')
  }
 
   return (

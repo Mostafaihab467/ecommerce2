@@ -21,7 +21,7 @@ function Shipping() {
         const shippingAddress = new C_Shipping(city,address,postalCode,country)
 
        dispatch(Add_Shipping_Address(shippingAddress))
-        nav('../payment') 
+        nav('/payment') 
       
     }
 

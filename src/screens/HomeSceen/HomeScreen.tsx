@@ -21,12 +21,27 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
   );
 
   const { pageChange } = useSelector((state: any) => state.productRepo);
-  const [view, setView] = useState('list');  // Default view is grid
-  window.addEventListener('resize', () => {
-    if(window.innerWidth < 900){
-      setView('list')
-    }
-  });
+  const [view, setView] = useState('grid');  // Default view is grid
+  
+  // Responsive view handling
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setView('list');
+      } else {
+        setView('grid');
+      }
+    };
+
+    // Set initial view based on screen size
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Adjust as needed
   const dispatch = useDispatch();
@@ -71,29 +86,36 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
       {products && products.length > 0 ? (
         <>
           <h1 className="text-center">Latest Products</h1>
-          {view === 'list' ?
-            <Row>
+          
+          {/* Grid View */}
+          {view === 'grid' && (
+            <Row className="products-grid">
               {currentProducts.map((product) => (
                 <Col
                   key={product._id}
                   xs={12}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                  xl={3}
-                  className={`product-col ${view === 'list' ? 'list-view' : 'grid-view'}`}
+                  sm={12}
+                  md={6}
+                  lg={6}
+                  xl={4}
+                  className="product-col"
                 >
                   <Product grid={view} item={product} />
-
                 </Col>
               ))}
             </Row>
-            : <Col xl={4}>
-
+          )}
+          
+          {/* List View */}
+          {view === 'list' && (
+            <Row className="products-list">
               {currentProducts.map((product) => (
-                <Product grid={view}  item={product} />
+                <Col key={product._id} xs={12} className="product-col">
+                  <Product grid={view} item={product} />
+                </Col>
               ))}
-            </Col>}
+            </Row>
+          )}
           {/* Pagination Controls */}
           <div className="pagination-container">
             <ProductPagination />
@@ -101,12 +123,12 @@ function HomeScreen({ onPageChange }: HomeScreenProps) {
           {/* Recommended Products Section */}
           <div className="recommended-products mt-4">
             <h2 className="text-center">Recommended for You</h2>
-            <Row>
-              {products.length > 0 && (
-                <Col key={products[0]._id} xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <Product grid={view} item={products[0]} variant="recommended" />
+            <Row className="recommended-grid">
+              {products.slice(0, 6).map((product) => (
+                <Col key={product._id} xs={12} sm={6} md={4} lg={4} xl={3} className="product-col">
+                  <Product grid="list" item={product} variant="recommended" />
                 </Col>
-              )}
+              ))}
             </Row>
           </div>
         </>

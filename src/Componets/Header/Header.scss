@@ -17,17 +17,27 @@
     }
   
     .user-info {
+    
+      align-items: center;
+      gap: 10px;
+      
       .profile-image {
         width: 35px; // Adjust size if needed
         height: 35px;
         border-radius: 50%;
-        margin-right: 10px;
+        margin-right: 8px;
+        margin-bottom: 0;
+        object-fit: cover;
+        display: inline-block;
       }
 
       span {
         color: var(--text-color);
         font-weight: bold;
-        font-size: 0.875rem; // Adjust font size if needed
+        font-size: 0.95rem; // Slightly larger for clarity
+        margin: 0;
+        display: inline-block;
+        vertical-align: middle;
       }
     }
   
@@ -37,12 +47,70 @@
       color: var(--text-color);
       font-size: large;
       cursor: pointer;
+      margin-left: 1rem;
+    }
+
+  // Language dropdown styles
+  .language-dropdown-item {
+    padding: 8px 16px;
+    
+    .language-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-color);
+      font-size: 0.875rem;
+    }
+    
+    .language-options {
+      display: flex;
+      gap: 8px;
+      
+      .language-option {
+        padding: 6px 12px;
+        border: 1px solid var(--border-color, #ddd);
+        border-radius: 6px;
+        background: var(--bg-color, #fff);
+        color: var(--text-color);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background: var(--primary-color, #007bff);
+          color: white;
+          border-color: var(--primary-color, #007bff);
+        }
+        
+        &.active {
+          background: var(--primary-color, #007bff);
+          color: white;
+          border-color: var(--primary-color, #007bff);
+        }
+      }
     }
   }
-  .Menuebar{
-    cursor: pointer;
-    font-weight: 900;
-    position: absolute;
-    left: 41px;
-  }
-  /* Define variables for dark mode and light mode */
+}
+.Menuebar{
+  cursor: pointer;
+  font-weight: 900;
+  position: absolute;
+  left: 41px;
+}
+/* Define variables for dark mode and light mode */
+
+// CSS Variables for theming
+:root {
+  --primary-color: #007bff;
+  --border-color: #ddd;
+  --bg-color: #fff;
+  --text-color: #333;
+}
+
+// Dark mode variables
+.dark-mode {
+  --primary-color: #4dabf7;
+  --border-color: #495057;
+  --bg-color: #343a40;
+  --text-color: #f8f9fa;
+}

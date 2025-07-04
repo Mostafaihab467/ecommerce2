@@ -37,6 +37,18 @@ body.dark-mode {
 .main-content {
   flex: 1;
   padding: 20px;
+  
+  // RTL support for main content
+  .rtl & {
+    margin-right: 250px; // Adjust for RTL sidebar
+    margin-left: 0;
+  }
+  
+  // LTR support for main content
+  .ltr & {
+    margin-left: 250px; // Adjust for LTR sidebar
+    margin-right: 0;
+  }
 }
 
 // Sidebar

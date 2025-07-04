@@ -38,7 +38,7 @@ function PlaceOrderScreen() {
     
         dispatch(AddOrder(new C_Order(myCarts,paymentMehod,Shipping,total,shipping,false,0)))
         dispatch(CLEAR_MY_CART())
-        nav('../../OrderScreen')
+        nav('/OrderScreen')
     }
 
     return (

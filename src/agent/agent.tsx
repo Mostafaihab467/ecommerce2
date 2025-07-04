@@ -5,6 +5,8 @@ import { IOrder } from './../Models/OrderModel';
 import ToastService from '../utils/toast';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Re-export ToastService for convenience
+
 axios.defaults.baseURL = 'http://192.168.1.30:5000'
 
 // Map of URL patterns to meaningful messages

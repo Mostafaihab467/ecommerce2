@@ -20,8 +20,8 @@ const SideBar: React.FC<SideBarProps> = ({ show, handleClose }) => {
       </div>
 
       <div className="offcanvas-body">
-        {user.isAdmin && (
-          <Link style={{textDecoration:'none'}} className="dashboard-link" to="./dashboard">
+        {user?.isAdmin && (
+          <Link style={{textDecoration:'none'}} className="dashboard-link" to="/dashboard">
             <div className="dashboard-section sidebar-section">
               
               <ul className="dashboard-wrapper sidebar-menu">

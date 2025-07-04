@@ -18,7 +18,7 @@ function UsersScreen() {
 
         dispatch(getAllUsers())
         if(!currentUser.isAdmin){
-            nav('../../')
+            nav('/')
         }
     },[])
 

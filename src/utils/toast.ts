@@ -1,3 +1,4 @@
+
 import { toast, ToastOptions } from 'react-toastify';
 
 // Default toast configuration

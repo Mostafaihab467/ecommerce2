@@ -7,9 +7,19 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-direction: column; /* Ensure elements stack vertically */
   position: fixed; /* Keep sidebar fixed while scrolling */
-  left: 0; /* Align sidebar to the left */
   top: 0; /* Align sidebar to the top */
   z-index: 1000; /* Ensure it stays above other content */
+  
+  // LTR (Left-to-Right) positioning
+  &.ltr {
+    left: 0;
+  }
+  
+  // RTL (Right-to-Left) positioning
+  &.rtl {
+    right: 0;
+    left: auto;
+  }
 
   .card-title {
     font-size: 1.5rem;
@@ -23,6 +33,76 @@
 
   .filter-option {
     margin-bottom: 0.5rem;
+  }
+
+  // RTL-specific styles for form elements
+  &.rtl {
+    .sidebar-checkbox,
+    .sidebar-radio {
+      .form-check-input {
+        margin-left: 0;
+        margin-right: 0.5rem;
+        float: right;
+      }
+      
+      .form-check-label {
+        text-align: right;
+        direction: rtl;
+        margin-right: 1.5rem;
+        margin-left: 0;
+        display: block;
+      }
+    }
+    
+    .sidebar-title {
+      text-align: right;
+      direction: rtl;
+    }
+    
+    .list-group-item {
+      text-align: right;
+      direction: rtl;
+    }
+    
+    .card-title {
+      text-align: right;
+      direction: rtl;
+    }
+  }
+  
+  // LTR-specific styles for form elements
+  &.ltr {
+    .sidebar-checkbox,
+    .sidebar-radio {
+      .form-check-input {
+        margin-right: 0;
+        margin-left: 0.5rem;
+        float: left;
+      }
+      
+      .form-check-label {
+        text-align: left;
+        direction: ltr;
+        margin-left: 1.5rem;
+        margin-right: 0;
+        display: block;
+      }
+    }
+    
+    .sidebar-title {
+      text-align: left;
+      direction: ltr;
+    }
+    
+    .list-group-item {
+      text-align: left;
+      direction: ltr;
+    }
+    
+    .card-title {
+      text-align: left;
+      direction: ltr;
+    }
   }
 
   // Responsive styles

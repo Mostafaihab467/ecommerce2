@@ -30,57 +30,45 @@ import ProductImagesModal from './Componets/Widgets/Modal/AddProductSpecsModal/A
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/toast.css';
+import './styles/responsive-fixes.css';
+import './i18n';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
-
-
-
-function App(props: any) {
-  const { cachedPages,pageChange }  = (useSelector((state: any) => state.productRepo)) ; 
-  const user  = (useSelector((state: any) => state.user.user))  as IUserModel; 
+function AppContent(props: any) {
+  const { cachedPages, pageChange } = useSelector((state: any) => state.productRepo);
+  const user = useSelector((state: any) => state.user.user) as IUserModel;
   const dispatch = useDispatch();
-  window.addEventListener('resize', () => {
-   
-});
-
-  
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
-    dispatch(IntiateSocket())
-    // Initialize products on component mount
-    //API Key = FernCsYysABnnUyK8HcriX2a
-var x = []
-  if(!cachedPages.includes(pageChange)){
-    if(user.isAdmin){
-  
+    dispatch(IntiateSocket());
+    var x = [];
+    if (!cachedPages.includes(pageChange)) {
+      if (user?.isAdmin) {
+        // ...
+      }
+      dispatch(InitProducts(pageChange));
+      dispatch(SET_CURRENT_PAGE(pageChange));
     }
-    dispatch(InitProducts(pageChange)); // Fetch the first page by default
-    dispatch(SET_CURRENT_PAGE(pageChange))
-  }
-
-    
-  }, [pageChange,user]);
+  }, [pageChange, user]);
 
   const handlePageChange = (pageNumber: number) => {
-    dispatch(SET_CURRENT_PAGE(pageNumber)); // Update the current page
-    dispatch(InitProducts(pageNumber)); // Fetch products for the selected page
+    dispatch(SET_CURRENT_PAGE(pageNumber));
+    dispatch(InitProducts(pageNumber));
   };
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${isRTL ? 'rtl' : 'ltr'}`}>
       <Header />
       <div className="content-wrapper">
         <Sidebar />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<HomeScreen onPageChange={handlePageChange} />} />
-           
-            <Route path="/dashboard" element={  <Admins user={user}>
-              <Dashboard />
-            </Admins>} />
-
+            <Route path="/dashboard" element={<Admins user={user || {}}><Dashboard /></Admins>} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/shipping" element={<Shipping />} />
-            <Route path="/regi/>ster" element={<RegistrationScreen />} />
+            <Route path="/register" element={<RegistrationScreen />} />
             <Route path="/product-images/:id" element={<ProductImagesModal />} />
             <Route path="/Product/:id" element={<ProductScreen />} />
             <Route path="/payment" element={<PaymentScreen />} />
@@ -111,11 +99,16 @@ var x = []
         draggable
         pauseOnHover
         theme="colored"
-        toastClassName="custom-toast"
-        bodyClassName="custom-toast-body"
-        progressClassName="custom-progress-bar"
       />
     </div>
+  );
+}
+
+function App(props: any) {
+  return (
+    <LanguageProvider>
+      <AppContent {...props} />
+    </LanguageProvider>
   );
 }
 

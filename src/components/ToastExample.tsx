@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastService } from '../agent/agent';
+import ToastService from '../utils/toast';
 
 const ToastExample: React.FC = () => {
   

@@ -40,7 +40,7 @@ function ListMyOrder() {
                             <th className='False'>false</th>
                             <th> <button onClick={() => {
                                 dispatch(getOrderById(order.id))
-                                nav('../OrderScreen')
+                                nav('/OrderScreen')
                             }}>Details</button></th>
                         </tr>)
                     })}

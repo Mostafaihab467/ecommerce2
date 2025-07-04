@@ -14,6 +14,9 @@ import { Logout } from "./../../store/Action/userAction";
 import { toggleDarkMode } from "./../../store/Action/AppStateAction";
 import { IUserModel } from "../../Models/userModel";
 import SideBar from "./../Widgets/SideBar/SideBar"; // Import the SideBar component
+import LanguageSwitcher from "../../components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../contexts/LanguageContext";
 import "./Header.scss";
 
 function Header() {
@@ -21,13 +24,15 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.user) as IUserModel;
   const isDarkMode = useSelector((state: any) => state.AppState.isDarkMode);
+  const { t } = useTranslation();
+  const { isRTL, changeLanguage } = useLanguage();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showSideBar, setShowSideBar] = useState(false); // State for sidebar visibility
 
   useEffect(() => {
-    if (!user) {
-      nav("../../screens/LoginScreen");
+    if (!user || !user.token) {
+      nav("/login");
     }
   }, [user, nav]);
 
@@ -73,10 +78,10 @@ function Header() {
           <Navbar.Brand
             style={{ cursor: "pointer" }}
             onClick={() => {
-              nav("../../");
+              nav("/");
             }}
           >
-            Pro Shop
+            {t('home.welcome')}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-dark-example" />
           <Navbar.Collapse id="navbar-dark-example">
@@ -84,22 +89,23 @@ function Header() {
               <Form onSubmit={handleSearch} className="d-flex">
                 <Form.Control
                   type="search"
-                  placeholder="Search"
+                  placeholder={t('common.search')}
                   className="me-2 Search"
                   aria-label="Search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <Button variant="outline-primary" type="submit">
-                  Search
+                  {t('common.search')}
                 </Button>
               </Form>
 
-              <Nav.Link href="../cart/" className="icon-link">
-                <i className="fas fa-shopping-cart" /> Cart
+              <Nav.Link href="/cart" className="icon-link">
+                <i className="fas fa-shopping-cart" /> {t('navigation.cart')}
               </Nav.Link>
-              {user.token === "" ? (
-                <Nav.Link href="../../login" className="icon-link">
+              
+              {!user || user.token === "" ? (
+                <Nav.Link href="/login" className="icon-link">
                   <i className="fas fa-user" /> Sign In
                 </Nav.Link>
               ) : (
@@ -113,15 +119,15 @@ function Header() {
                           alt="Profile"
                           className="profile-image"
                         />
-                        <span>{user.name}</span>
+                        <span>{user?.name || 'User'}</span>
                       </span>
                     }
                     menuVariant={isDarkMode ? "dark" : "light"}
                   >
-                    <NavDropdown.Item href="../../MyProfile">
+                    <NavDropdown.Item href="/MyProfile">
                       Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="../../AddProduct">
+                    <NavDropdown.Item href="/AddProduct">
                       Add Product
                     </NavDropdown.Item>
                     <NavDropdown.Item
@@ -131,13 +137,37 @@ function Header() {
                     >
                       Logout
                     </NavDropdown.Item>
-                    {user.isAdmin && (
+                    
+                    <NavDropdown.Divider />
+                    
+                    {/* Language Switcher in Dropdown */}
+                    <NavDropdown.Item>
+                      <div className="language-dropdown-item">
+                        <span className="language-label">{t('common.language')}:</span>
+                        <div className="language-options">
+                          <button 
+                            className={`language-option ${isRTL ? 'active' : ''}`}
+                            onClick={() => changeLanguage('ar')}
+                          >
+                            🇸🇦 العربية
+                          </button>
+                          <button 
+                            className={`language-option ${!isRTL ? 'active' : ''}`}
+                            onClick={() => changeLanguage('en')}
+                          >
+                            🇺🇸 English
+                          </button>
+                        </div>
+                      </div>
+                    </NavDropdown.Item>
+                    
+                    {user?.isAdmin && (
                       <>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="../AlUsers">
+                        <NavDropdown.Item href="/AlUsers">
                           Users
                         </NavDropdown.Item>
-                        <NavDropdown.Item href="../AdminsEditScreen">
+                        <NavDropdown.Item href="/AdminsEditScreen">
                           Edit Products
                         </NavDropdown.Item>
                       </>
