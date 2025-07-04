@@ -55,6 +55,8 @@ export const AddProductImage = (products: any) => {
   return async (dispatch: any) => {
     await agent.products.AddProduct_Image(products).then((res) => {
       dispatch(ADD_PRODUCT_IMAGE(res.data as any));
+      window.location.reload();
+
     });
   };
 };

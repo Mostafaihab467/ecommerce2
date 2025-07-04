@@ -112,7 +112,7 @@ const ProductScreen: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("_id", selectedProduct._id);
@@ -120,8 +120,8 @@ const ProductScreen: React.FC = () => {
 
     if (formData.image) {
       formDataToSubmit.append("image", formData.image);
-      dispatch(AddProductImage(formDataToSubmit));
-      nav('../')
+     dispatch(AddProductImage(formDataToSubmit));
+   
     }
   };
 
@@ -140,137 +140,143 @@ const ProductScreen: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="product-screen">
       {selectedProduct._id === "" ? (
-        <Spinner />
+        <div className="loading-spinner">
+          <Spinner />
+        </div>
       ) : (
         <>
-          <Link className="btn btn-light my-3" to="../">
-            Go Back 
-          </Link>
+          <div className="container">
+            <Link className="back-button" to="../">
+              <i className="fas fa-arrow-left"></i>
+              Go Back 
+            </Link>
 
-          <Row>
-            {/* Product Images Carousel */}
-            <Col md={6}>
-          
-            {loading ? (
-                <Spinner /> // Show spinner while loading
-              ) : (
-            
-              <Carousel>
-                {resizedImages.length > 0 && (
-                  <Carousel.Item>
-                    <Image
-                      src={resizedImages[0]} // Main image
-                      alt={selectedProduct.name}
-                      fluid
-                    />
-                  </Carousel.Item>
-                )}
-                {resizedImages.slice(1).map((image, index) => (
-                  <Carousel.Item  key={index}>
-                    <div style={{display:'flex',justifyContent:"center"}}>
-
-                    <Image
-                      src={image} // Additional images
-                      alt={`${selectedProduct.name} ${index}`}
-                      fluid
-                      />
-                      </div>
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-                  )}    </Col>
-
-            {/* Product Details */}
-            <Col md={3}>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h3>{selectedProduct.name}</h3>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Ratings
-                    rating={selectedProduct.rating}
-                    numReviews={selectedProduct.numReviews}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item>Price: ${selectedProduct.price}</ListGroup.Item>
-                <ListGroup.Item>
-                  Description: {selectedProduct.description}
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-
-            {/* Purchase Options */}
-            <Col md={3}>
-              <Card>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Price:</Col>
-                      <Col>
-                        <strong>${selectedProduct.price}</strong>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Status:</Col>
-                      <Col>
-                        <strong
-                          style={{
-                            color:
-                              selectedProduct.countInStock > 0
-                                ? "green"
-                                : "red",
-                          }}
-                        >
-                          {selectedProduct.countInStock > 0
-                            ? "In Stock"
-                            : "Out of Stock"}
-                        </strong>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-                  {selectedProduct.countInStock > 0 && (
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Qty</Col>
-                        <Col>
-                          <Form.Control
-                            as="select"
-                            value={qty}
-                            onChange={(e) => setQty(parseInt(e.target.value))}
-                          >
-                            {QTY(selectedProduct.countInStock).map((e) => (
-                              <option key={e + 1} value={e + 1}>
-                                {e + 1}
-                              </option>
-                            ))}
-                          </Form.Control>
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
+            <div className="product-container">
+              <Row>
+                {/* Product Images Carousel */}
+                <Col md={6} className="image-section">
+                  {loading ? (
+                    <div className="loading-spinner">
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <Carousel>
+                      {resizedImages.length > 0 && (
+                        <Carousel.Item>
+                          <Image
+                            src={resizedImages[0]}
+                            alt={selectedProduct.name}
+                            fluid
+                          />
+                        </Carousel.Item>
+                      )}
+                      {resizedImages.slice(1).map((image, index) => (
+                        <Carousel.Item key={index}>
+                          <Image
+                            src={image}
+                            alt={`${selectedProduct.name} ${index}`}
+                            fluid
+                          />
+                        </Carousel.Item>
+                      ))}
+                    </Carousel>
                   )}
-                  <ListGroup.Item>
-                    <Button
-                      disabled={selectedProduct.countInStock <= 0}
-                      className="btn-block"
-                      type="button"
-                      style={{ width: "100%" }}
-                      onClick={() => cartHandler(selectedProduct)}
-                    >
-                      Add to Cart
-                    </Button>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card>
-            </Col>
+                </Col>
+
+                {/* Product Details */}
+                <Col md={3} className="product-details">
+                  <h1 className="product-title">{selectedProduct.name}</h1>
+                  
+                  <div className="product-rating">
+                    <Ratings
+                      rating={selectedProduct.rating}
+                      numReviews={selectedProduct.numReviews}
+                    />
+                  </div>
+                  
+                  <div className="product-price">
+                    ${selectedProduct.price}
+                  </div>
+                  
+                  <div className="product-description">
+                    {selectedProduct.description}
+                  </div>
+                </Col>
+
+                {/* Purchase Options */}
+                <Col md={3} className="purchase-section">
+                  <Card className="purchase-card">
+                    <Card.Header>Purchase Options</Card.Header>
+                    <ListGroup variant="flush">
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Price:</Col>
+                          <Col>
+                            <strong>${selectedProduct.price}</strong>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Status:</Col>
+                          <Col>
+                            <strong
+                              className={
+                                selectedProduct.countInStock > 0
+                                  ? "status-in-stock"
+                                  : "status-out-of-stock"
+                              }
+                            >
+                              {selectedProduct.countInStock > 0
+                                ? "In Stock"
+                                : "Out of Stock"}
+                            </strong>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      {selectedProduct.countInStock > 0 && (
+                        <ListGroup.Item>
+                          <Row>
+                            <Col>Quantity:</Col>
+                            <Col>
+                              <Form.Control
+                                as="select"
+                                value={qty}
+                                onChange={(e) => setQty(parseInt(e.target.value))}
+                              >
+                                {QTY(selectedProduct.countInStock).map((e) => (
+                                  <option key={e + 1} value={e + 1}>
+                                    {e + 1}
+                                  </option>
+                                ))}
+                              </Form.Control>
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      )}
+                      <ListGroup.Item>
+                        <Button
+                          disabled={selectedProduct.countInStock <= 0}
+                          className="add-to-cart-btn"
+                          type="button"
+                          onClick={() => cartHandler(selectedProduct)}
+                        >
+                          <i className="fas fa-shopping-cart me-2"></i>
+                          Add to Cart
+                        </Button>
+                      </ListGroup.Item>
+                    </ListGroup>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
 
             {/* Admin Options */}
-            {user._id === selectedProduct.user && ( 
-              <Col xl={12}>
-                <Card className="mt-4">
+            {user._id === selectedProduct.user && (
+              <div className="admin-section">
+                <Card className="admin-card">
                   <Card.Header>Manage Product</Card.Header>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
@@ -285,10 +291,11 @@ const ProductScreen: React.FC = () => {
                               id="file-input"
                               style={{ display: "none" }}
                             />
-                            <label htmlFor="file-input" className="clickable-icon">
-                              <i  className="fas fa-plus primary">Add Image</i>
+                            <label htmlFor="file-input" className="file-upload-label">
+                              <i className="fas fa-plus"></i>
+                              Add Image
                             </label>
-                            <Button  variant="primary" type="submit" className="ms-2">
+                            <Button variant="primary" type="submit" className="admin-btn ms-2">
                               Upload
                             </Button>
                           </Form>
@@ -308,16 +315,16 @@ const ProductScreen: React.FC = () => {
                           <Button
                             variant="primary"
                             onClick={() => nav(`/product-images/${selectedProduct._id}`)}
-                            className="ms-2"
+                            className="admin-btn ms-2"
                           >
-                            View Product Images
+                            <i className="fas fa-images me-2"></i>
+                            View Images
                           </Button>
                         </Col>
                         <Col xs="auto">
                           <Button
-                            style={{ marginLeft: "20px" }}
                             variant="danger"
-                            className="btn-sm action delete"
+                            className="admin-btn danger"
                             onClick={() => {
                               dispatch(deleteProduct(selectedProduct._id));
                             }}
@@ -326,13 +333,12 @@ const ProductScreen: React.FC = () => {
                           </Button>
                         </Col>
                       </Row>
-                    
                     </ListGroup.Item>
                   </ListGroup>
                 </Card>
-              </Col>
+              </div>
             )}
-          </Row>
+          </div>
         </>
       )}
     </div>

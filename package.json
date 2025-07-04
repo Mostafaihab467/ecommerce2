@@ -19,6 +19,7 @@
     "@types/styled-components": "^5.1.24",
     "axios": "^0.26.0",
     "bootstrap": "^5.1.3",
+    "rabbitmq-client": "^4.6.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.0",
     "react-bootstrap-icons": "^1.7.2",
@@ -30,6 +31,7 @@
     "react-router": "^6.2.2",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-toastify": "^9.1.3",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
@@ -41,10 +43,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": " react-scripts start",
     "client": "npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "server": "live-server public --host=0.0.0.0 --port=3000",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -67,6 +70,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^3.5.0",
+    "@types/react-toastify": "^4.0.2",
     "@types/redux-persist": "^4.3.1"
   }
 }

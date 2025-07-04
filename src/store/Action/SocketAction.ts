@@ -6,7 +6,7 @@ const token = localStorage.jwt;
 
 export const IntiateSocket = () => {
     return async (dispatch: any) => {
-        const socket = io('http://localhost:5001',{
+        const socket = io('http://192.168.1.30:5001',{
             auth:{
                 token:token
             }
@@ -14,7 +14,7 @@ export const IntiateSocket = () => {
 
        socket.on('stats',(res)=>{
         dispatch(SERVER_HEALTH(res))
-     
+        
        })
     }
   

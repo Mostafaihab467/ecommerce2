@@ -27,6 +27,9 @@ import { IntiateSocket } from './store/Action/SocketAction';
 import { IUserModel } from './Models/userModel';
 import Admins from './Componets/HOC/Admin'
 import ProductImagesModal from './Componets/Widgets/Modal/AddProductSpecsModal/AddProductSpecsModal';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './styles/toast.css';
 
 
 
@@ -42,12 +45,13 @@ function App(props: any) {
   
 
   useEffect(() => {
+    dispatch(IntiateSocket())
     // Initialize products on component mount
     //API Key = FernCsYysABnnUyK8HcriX2a
 var x = []
   if(!cachedPages.includes(pageChange)){
     if(user.isAdmin){
-    dispatch(IntiateSocket())
+  
     }
     dispatch(InitProducts(pageChange)); // Fetch the first page by default
     dispatch(SET_CURRENT_PAGE(pageChange))
@@ -96,6 +100,21 @@ var x = []
         </main>
       </div>
       <Footer />
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        toastClassName="custom-toast"
+        bodyClassName="custom-toast-body"
+        progressClassName="custom-progress-bar"
+      />
     </div>
   );
 }

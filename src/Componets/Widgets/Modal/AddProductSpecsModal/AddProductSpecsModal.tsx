@@ -34,46 +34,60 @@ function ProductImagesModal() {
     dispatch(deleteProductImage(payload))
   };
   return (
-    <Modal  show onHide={handleClose} size="lg" centered>
-      <Modal.Header className="ProductImagesWidgetModal" closeButton>
+    <Modal show onHide={handleClose} size="xl" centered className="ProductImagesWidgetModal">
+      <Modal.Header closeButton>
         <Modal.Title>
-            <span>
-
-            Product Images
-            </span>
-            </Modal.Title>
+          <span>Product Images Gallery</span>
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="ProductImagesWidgetModal">
-        <Row>
-          <Col md={12} className="mb-3">
-            <div style={{cursor:'pointer'}}  className="image-container">
-              <img
-                className="img-fluid" 
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-              />
-              <i style={{cursor:'pointer'}}  className="fas fa-trash delete-icon" onClick={() => handleDelete(selectedProduct.image)}></i>
-            </div>
-          </Col>
-          {selectedProduct.productimages.map((img:any, index:any) => (
-            <Col md={4} key={index} className="mb-3">
-              <div className="image-container">
+      <Modal.Body>
+        {selectedProduct.image || selectedProduct.productimages.length > 0 ? (
+          <div className="image-grid">
+            {/* Main Image */}
+            {selectedProduct.image && (
+              <div className="image-container main-image">
                 <img
-                  className="img-fluid"
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  style={{ objectFit: 'contain', backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                />
+                <div className="image-overlay">
+                  <div className="overlay-content">
+                    <div className="overlay-icon">📸</div>
+                    <div className="overlay-text">Main Image</div>
+                  </div>
+                </div>
+                <div className="delete-icon" onClick={() => handleDelete(selectedProduct.image)}></div>
+              </div>
+            )}
+            
+            {/* Additional Images */}
+            {selectedProduct.productimages.map((img: any, index: any) => (
+              <div key={index} className="image-container">
+                <img
                   src={img}
                   alt={`Product image ${index + 1}`}
                 />
-                <i  style={{cursor:'pointer'}} className="fas fa-trash delete-icon" onClick={() => handleDelete(img)}></i>
+                <div className="image-overlay">
+                  <div className="overlay-content">
+                    <div className="overlay-icon">🖼️</div>
+                    <div className="overlay-text">Image {index + 1}</div>
+                  </div>
+                </div>
+                <div className="delete-icon" onClick={() => handleDelete(img)}></div>
               </div>
-            </Col>
-          ))}
-        </Row>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <div className="empty-icon">📷</div>
+            <div className="empty-text">No product images available</div>
+          </div>
+        )}
       </Modal.Body>
-      <Modal.Footer className="ProductImagesWidgetModal">
-        <Button className="botton" variant="secondary" onClick={handleClose}>
-         <span>
-             Close
-            </span>
+      <Modal.Footer>
+        <Button className="botton" onClick={handleClose}>
+          <span>Close Gallery</span>
         </Button>
       </Modal.Footer>
     </Modal>

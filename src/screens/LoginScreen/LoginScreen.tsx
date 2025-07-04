@@ -10,11 +10,19 @@ import { SET_REDIRECT_PATH } from '../../store/Action/RouterAction';
 
 function LoginScreen() {
     const nav = useNavigate()
-    const [email, setEmail] = useState('')
-    const [password, setpassword] = useState('')
+    const [email, setEmail] = useState('mostafaihab2019@gmail.com')
+    const [password, setpassword] = useState('Mostafaihab30$')
     const isLogged = useSelector((state: any) => state.user.user.token) != ''
     const redirectLink = useSelector((state: any) => state.redirection.redirect) as string
     const dispatch = useDispatch()
+    
+    // Navigate to home if already logged in
+    React.useEffect(() => {
+        if (isLogged) {
+            nav('/')
+        }
+    }, [isLogged, nav])
+    
     const submitButton = (e: any) => {
         e.preventDefault()
       
@@ -24,12 +32,18 @@ function LoginScreen() {
             name: ""
         } as IUserModel
         dispatch(Login(user))
-        if( redirectLink !='../../'){
+    }
+    
+    // Navigate to home on successful login
+    React.useEffect(() => {
+        if (isLogged && redirectLink === '../../') {
+            nav('/')
+            dispatch(SET_REDIRECT_PATH('../../'))
+        } else if (isLogged && redirectLink !== '../../') {
             nav(redirectLink)
             dispatch(SET_REDIRECT_PATH('../../'))
         }
-    
-    }
+    }, [isLogged, redirectLink, nav, dispatch])
 
  //   isLogged ? nav('../../') : null
 

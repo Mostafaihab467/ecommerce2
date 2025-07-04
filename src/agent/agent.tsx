@@ -2,31 +2,107 @@ import axios, { AxiosResponse } from 'axios'
 import { IUserModel } from '../Models/userModel';
 import { ProductModel } from './../Models/ProductModel';
 import { IOrder } from './../Models/OrderModel';
+import ToastService from '../utils/toast';
+import 'react-toastify/dist/ReactToastify.css';
 
+axios.defaults.baseURL = 'http://192.168.1.30:5000'
 
+// Map of URL patterns to meaningful messages
+const urlToMessageMap: { [key: string]: { success: string, error: string } } = {
+  '/api/products': { success: 'Products loaded successfully!', error: 'Failed to load products' },
+  '/api/products/AddSellProduct': { success: 'Product added successfully!', error: 'Failed to add product' },
+  '/api/products/AddproductImage': { success: 'Product image added!', error: 'Failed to add product image' },
+  '/api/products/EditProduct': { success: 'Product updated successfully!', error: 'Failed to update product' },
+  '/api/products/deleteProduct': { success: 'Product deleted successfully!', error: 'Failed to delete product' },
+  '/api/products/deleteProductImage': { success: 'Product image deleted!', error: 'Failed to delete product image' },
+  '/api/Account/login': { success: 'Login successful!', error: 'Login failed' },
+  '/api/Account/register': { success: 'Registration successful!', error: 'Registration failed' },
+  '/api/Account/AllUsers': { success: 'Users loaded successfully!', error: 'Failed to load users' },
+  '/api/Account/delete_user': { success: 'User deleted successfully!', error: 'Failed to delete user' },
+  '/api/order/placeOrder': { success: 'Order placed successfully!', error: 'Failed to place order' },
+  '/api/order/Pay': { success: 'Payment successful!', error: 'Payment failed' },
+  '/api/order/myorders': { success: 'Orders loaded successfully!', error: 'Failed to load orders' },
+  '/api/Statstics/productStatstics': { success: 'Statistics loaded!', error: 'Failed to load statistics' }
+};
 
-axios.defaults.baseURL = 'http://localhost:5000'
+// Helper function to get message based on URL
+function getMessageForUrl(url: string, type: 'success' | 'error'): string {
+  for (const pattern in urlToMessageMap) {
+    if (url.includes(pattern)) {
+      return urlToMessageMap[pattern][type];
+    }
+  }
+  return type === 'success' ? 'Request completed successfully!' : 'Request failed!';
+}
 
 axios.interceptors.request.use(async (request) => {
     const token = window.localStorage.getItem('jwt')
 
-    request.headers!.Authorization = `Bearer ${token}` 
+    if (token) request.headers!.Authorization = `Bearer ${token}`
 
     return request
 })
 
-
-
-
-axios.interceptors.response.use(async (response) => {
-
-
-    return response
-}, (error: AxiosResponse) => {
-
-    console.log(error)
-
-})
+axios.interceptors.response.use(
+    (response) => {
+        const url = response.config.url || '';
+        const method = response.config.method?.toUpperCase();
+        
+        // Only show success messages for non-GET requests
+        if (method !== 'GET') {
+            const message = getMessageForUrl(url, 'success');
+            ToastService.success(message);
+        }
+        
+        return response;
+    },
+    (error: any) => {
+        let errorMessage = 'Request failed!';
+        
+        if (error.response) {
+            // Server responded with error status
+            const url = error.response.config?.url || '';
+            const status = error.response.status;
+            
+            // Handle specific error statuses
+            switch (status) {
+                case 401:
+                    ToastService.unauthorized();
+                    return Promise.reject(error);
+                case 403:
+                    ToastService.permissionDenied();
+                    return Promise.reject(error);
+                case 422:
+                    const validationMessage = error.response.data?.message || 'Validation failed';
+                    ToastService.validationError(validationMessage);
+                    return Promise.reject(error);
+                case 500:
+                    ToastService.serverError();
+                    return Promise.reject(error);
+                default:
+                    errorMessage = getMessageForUrl(url, 'error');
+                    
+                    // Add specific error details if available
+                    if (error.response.data?.message) {
+                        errorMessage += `: ${error.response.data.message}`;
+                    } else if (status) {
+                        errorMessage += ` (${status})`;
+                    }
+            }
+        } else if (error.request) {
+            // Network error
+            ToastService.networkError();
+            return Promise.reject(error);
+        } else {
+            // Other error
+            errorMessage = error.message || 'An unexpected error occurred.';
+        }
+        
+        ToastService.error(errorMessage);
+        console.error('API Error:', error);
+        return Promise.reject(error);
+    }
+)
 
 
 const products = {
@@ -86,5 +162,7 @@ const agent = {
     statstics
 }
 
+// Export ToastService for use throughout the application
+export { ToastService };
 
 export default agent
